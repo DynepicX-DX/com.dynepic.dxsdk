@@ -35,10 +35,21 @@ public class MOTARLogonWindow : EditorWindow
     public void OnGUI()
     {
     }
-   
-    
+
+    public void OnBeforeAssemblyReload()
+    {
+        Debug.Log("Before Assembly Reload");
+    }
+
+    public void OnAfterAssemblyReload()
+    {
+        Debug.Log("After Assembly Reload");
+    }
     private void OnEnable()
     {
+        AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
+        AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
+
         instance = this;
         if (myWindow == null)
             myWindow = GetWindow<MOTARLogonWindow>();
@@ -147,7 +158,7 @@ public class MOTARLogonWindow : EditorWindow
             if(AppName == evt.newValue)
             {
                 var myDescriptionField = root.Query<Label>().ToList().Find(y => y.name == "APPDESCRIPTION");
-                myDescriptionField.text = (string)x["description"];
+                myDescriptionField.text = (string)x["description"]; 
 
                 //APPCLIENTID
                 var myClientIdField = root.Query<TextField>().ToList().Find(y => y.name == "APPCLIENTID");
