@@ -1,0 +1,28 @@
+{
+  "name": "com.dynepic.dxsdk",
+  "version": "0.2.0",
+  "displayName": "Dynepic MOTAR SDK",
+  "description": "Dynepic's SDK to access MOTAR from Unity",
+  "unity": "2020.1",
+  "documentation": "https:/docs.motar.io",
+  "organization": "Dynepic, Inc",
+  "keywords": [
+    "MOTAR",
+    "Dynepic",
+    "LMS",
+    "training"
+  ],
+  "dependencies": {
+    "com.unity.editorcoroutines": "1.0.0",
+    "com.unity.textmeshpro": "3.0.1",
+    "com.unity.ui": "1.0.0-preview.14",
+    "com.unity.ui.builder": "1.0.0-preview.14",
+    "com.unity.nuget.newtonsoft-json": "2.0.0"
+  },
+  "author": {
+    "name": "Dynepic",
+    "email": "motar@dynepic.com",
+    "url": "https://www.dynepic.com"
+  },
+  "hideInEditor": false
+}

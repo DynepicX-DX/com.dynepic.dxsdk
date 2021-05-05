@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" uiee="UnityEditor.Experimental" xsi="http://www.w3.org/2001/XMLSchema-instance" cui="DXCommunications" editor-extension-mode="False">
+    <ui:IMGUIContainer>
+        <ui:Box name="SearchArea" style="position: absolute; top: 0; left: 0; width: 1412px; height: 110px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0);">
+            <ui:Label text="Discover Models" display-tooltip-when-elided="true" name="DISCOVERLABEL" style="position: absolute; top: 20px; left: 0; -unity-font: url(&apos;/Assets/MOTAR/MOTAR_Fonts/Montserrat-Regular.ttf&apos;); font-size: 18px; color: rgb(255, 255, 255); height: 40px; align-items: center; -unity-text-align: upper-center; width: 850px; -unity-font-style: bold; padding-top: 5px;">
+                <ui:TextField picking-mode="Ignore" text="What are you looking for...?" name="SearchField" style="width: 332px; height: 22px; top: 32px; color: rgb(7, 7, 7); -unity-font-style: normal; font-size: 9px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; -unity-font: url(&apos;/Packages/com.dynepic.dxsdk/Runtime/MOTAR/MOTAR_Fonts/Montserrat-Regular.ttf&apos;);">
+                    <ui:Button display-tooltip-when-elided="true" name="SEARCH" style="width: 20px; height: 20px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; background-color: rgb(41, 209, 152); background-image: url(&apos;/Packages/com.dynepic.dxsdk/Runtime/MOTAR/MOTAR_Images/Search.png&apos;); -unity-background-scale-mode: scale-to-fit; left: -1px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; top: 1px; border-top-left-radius: 0; border-bottom-left-radius: 0;" />
+                </ui:TextField>
+            </ui:Label>
+        </ui:Box>
+        <ui:Box name="FilterArea" style="position: absolute; top: 0; left: 0; width: 1416px; height: 56px; background-color: rgb(248, 248, 248); height: 566px; top: 110px;">
+            <uie:EnumField name="Sort" value="Name" type="DXCommunications.SortOrder,dynepic.MOTAR.Editor" style="position: absolute; left: 7.18%; top: 26px; width: 82px;" />
+            <uie:EnumField name="Format" value="All" type="DXCommunications.FormatFilter, dynepic.MOTAR.Editor" style="position: absolute; left: 21.06%; top: 26px; width: 82px;" />
+            <uie:EnumField name="Poly" value="All" type="DXCommunications.PolyFilter, dynepic.MOTAR.Editor" style="position: absolute; left: 32.95%; top: 26px; width: 82px;" />
+        </ui:Box>
+        <ui:ScrollView name="HUBScrollview" horizontal-page-size="20" vertical-page-size="25" style="-unity-background-image-tint-color: rgb(0, 0, 0); background-color: rgb(248, 248, 248); height: 400px; top: 166px;" />
+    </ui:IMGUIContainer>
+</ui:UXML>

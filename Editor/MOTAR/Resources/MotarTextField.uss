@@ -1,0 +1,9 @@
+#unity-text-input {
+    opacity: 1;
+    -unity-font: url('/Assets/MOTAR/MOTAR_Fonts/Montserrat-Regular.ttf');
+    color: rgb(5, 5, 5);
+    background-color: rgb(250, 250, 250);
+}
+
+.unity-base-popup-field__arrow {
+}

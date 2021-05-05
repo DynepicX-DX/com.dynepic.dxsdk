@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" cui="DXCommunications" editor-extension-mode="False">
+    <ui:VisualElement class="HubThumbnail" style="height: 81px;">
+      <ui:Box name="BumberBox" style="position: absolute; top: 200px; left: 0; width: 305px; height: 81px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(77, 77, 72); background-color: rgb(120, 120, 120); border-top-left-radius: 0; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 10px;">
+        <ui:Label display-tooltip-when-elided="true" name="AppName" style="color: rgb(51, 48, 48); font-size: 18px; left: 15px; top: 10px;" />
+      </ui:Box>
+       
+    </ui:VisualElement>
+</ui:UXML>

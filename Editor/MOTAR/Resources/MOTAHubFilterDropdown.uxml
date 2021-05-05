@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" cui="DXCommunications" editor-extension-mode="False">
+    <Style src="MotarTextField.uss" />
+    <ui:VisualElement class="HubFilterDropdown" style="height: auto; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-slice-right: 100; -unity-slice-bottom: 100; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;">
+        <ui:Box name="TopBox" style="position: absolute; top: 0; left: 0; width: 52px; height: 13px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); border-top-left-radius: 1px; border-bottom-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
+            <ui:Label text="by Format" display-tooltip-when-elided="true" name="CategoryLabel" style="-unity-font: url(&apos;/Assets/MOTAR/MOTAR_Fonts/Montserrat-Regular.ttf&apos;); font-size: 7px; -unity-background-scale-mode: scale-to-fit; position: absolute; left: 0; color: rgba(127, 133, 186, 255); width: 82px;" />
+            <ui:VisualElement name="DropArrow" style="background-image: url(&apos;/Assets/Modern UI Pack/Textures/Demo/Icons/Dropdown.png&apos;); width: 11px; height: 11px; position: absolute; left: 82px; top: 0; background-color: rgba(127, 133, 186, 255);" />
+        </ui:Box>
+    </ui:VisualElement>
+</ui:UXML>

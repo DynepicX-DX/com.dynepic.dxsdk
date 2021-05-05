@@ -1,0 +1,15 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+  <!-- Creates the button. -->
+  xsi:noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+  xsi:schemaLocation="UnityEngine.UIElements ../UIElementsSchema/UnityEngine.UIElements.xsd">
+  <Template path="Assets/Editor/Resources/TabTemplate.uxml" name="motartab-template" />
+  <!-- Creates a parent VisualElement in which we will add our template. -->
+  <VisualElement class="buttons-container">
+    <!-- Instantiates the template multiple times. Each time, we give it a name and a class for future reference. -->
+    <Instance template="motartab-template" name="MOTARPrefabs"/>
+    <Instance template="motartab-template" name="MOTARAPIs"/>
+    <Instance template="motartab-template" name="MOTARDiscover"/>
+    <Instance template="motartab-template" name="MOTARStateMachine"/>
+    
+</VisualElement>  
+</UXML>

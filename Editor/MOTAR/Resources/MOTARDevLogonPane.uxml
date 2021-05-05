@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" cui="DXCommunications" editor-extension-mode="False">
+    <ui:IMGUIContainer />
+    <ui:Image name="MOTARLOGO" display-tooltip-when-elided="true" tabindex="0" style="position: absolute; top: 50px; left: 275px;" />
+    <ui:Box name="LOGONBOX" style="position: absolute; top: 192px; left: 30%; width: 285px; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); opacity: 1; display: flex;">
+        <ui:Label text="Userid:" display-tooltip-when-elided="true" style="position: absolute; top: 35px; left: 16px;" />
+        <ui:Label text="Password:" display-tooltip-when-elided="true" style="position: absolute; top: 65px; left: 16px;" />
+        <ui:TextField name="USERID" style="position: absolute; width: 150px; top: 35px; left: 116px;" />
+        <ui:TextField name="PASSWORD" password="true" mask-character="*" style="position: absolute; width: 150px; top: 65px; left: 116px;" />
+        <ui:Button name="MOTARLOGIN" text=" Login " display-tooltip-when-elided="true" style="height: 19px; width: 87px; position: absolute; top: 100px; left: 116px;" />
+        <ui:Label text="MOTAR Studio Login&#10;" display-tooltip-when-elided="true" style="left: 5px; top: 5px;" />
+    </ui:Box>
+</ui:UXML>

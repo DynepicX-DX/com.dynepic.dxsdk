@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &776294009226407032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 191015664950909205}
+  - component: {fileID: 4437564359522730458}
+  - component: {fileID: 4437564359522730459}
+  - component: {fileID: 8374169909979909562}
+  m_Layer: 0
+  m_Name: MOTAR-StateMachine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &191015664950909205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776294009226407032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 489}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4437564359522730458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776294009226407032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492cb49d2ced17a4f8fbf8d13094f462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MOTARUIObjects:
+  - {fileID: 6104524746317948496, guid: 8e2017857e080ce438c5a948acfe71c7, type: 3}
+  - {fileID: 6418968080726705096, guid: ba63f391f85ff2843aa058f4818a29e2, type: 3}
+  - {fileID: 1779092095874196958, guid: c883923c7ab643c4cad8b2f7739769fd, type: 3}
+  - {fileID: 776294009226407032}
+  - {fileID: 5365622570873197433, guid: ac2192bff3335ea409fa4c1ad0a64a10, type: 3}
+  - {fileID: 8445245819147046317, guid: abfd82560aba8224bab896cec0151236, type: 3}
+  - {fileID: 6519999837425935718, guid: 8c2beed093ee5844ca4e1eb49af36b8a, type: 3}
+  - {fileID: 8445245819147046317, guid: abfd82560aba8224bab896cec0151236, type: 3}
+  MOTARRuntimeStateMachine: {fileID: 0}
+  profile:
+    userId: 
+    userType: 0
+    accountType: 0
+    handle: 
+    firstName: 
+    lastName: 
+    profilePic: 
+    coverPhoto: 
+    country: 
+    anonymous: 0
+--- !u!95 &4437564359522730459
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776294009226407032}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 20971180f5d1a0f4d87240fbee19e852, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8374169909979909562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776294009226407032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47afbe4000e4d8b4da44258cb377599c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MOTARLoginPromptLocation: {fileID: 6104524746317948496, guid: 8e2017857e080ce438c5a948acfe71c7, type: 3}
+  MOTARUserInfoCanvasHandler: {fileID: 6519999837425935718, guid: 8c2beed093ee5844ca4e1eb49af36b8a, type: 3}
+  MOTARStartModuleButtonHandler: {fileID: 1779092095874196958, guid: c883923c7ab643c4cad8b2f7739769fd, type: 3}
+  MOTARTestResultsCanvasHandler: {fileID: 8445245819147046317, guid: abfd82560aba8224bab896cec0151236, type: 3}
+  MOTARTestQuestionsCanvas: {fileID: 5365622570873197433, guid: ac2192bff3335ea409fa4c1ad0a64a10, type: 3}
+  MOTARClassInfoHandler: {fileID: 4020264110909921804, guid: c52f4938045348743ab28db31d21711b, type: 3}
+  MOTARCoursesInfoHandler: {fileID: 4464453894807124112, guid: c8ac22ae99c6d234381b0201dbd94463, type: 3}
+  MOTARLessonsInfoHandler: {fileID: 2337143906482466282, guid: 8c301217a7fb75d41a7f1460d494fbd4, type: 3}
+  MOTARQuestionsInfoHandler: {fileID: 521047160975554742, guid: e0b768ae9f0828b498c1307967f2a93e, type: 3}

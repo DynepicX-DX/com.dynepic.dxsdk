@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f060e25d1f4e34e40bd9a7d1c4e29a57, type: 3}
+  m_Name: DXPrefabSettings
+  m_EditorClassIdentifier: 
+  LoginStateButton: {fileID: 6418968080726705096, guid: ba63f391f85ff2843aa058f4818a29e2, type: 3}
+  LoginUICanvas: {fileID: 6104524746317948496, guid: 8e2017857e080ce438c5a948acfe71c7, type: 3}
+  UserProfileCanvas: {fileID: 3176491714884540621, guid: 98f5aaea6f6ba734c8c87d479d88afd7, type: 3}
+  StartModuleButton: {fileID: 3624640697043021169, guid: edd8b959ae81fa84cbaffa78ecc57568, type: 3}
+  QuestionsCanvas: {fileID: 3200642923253113230, guid: e7c1a3f03fcce15489dcfd0703caa621, type: 3}
+  TestResultsCanvas: {fileID: 2580310270646389115, guid: 059341f69e517b54a96199bf0bbf5a0b, type: 3}

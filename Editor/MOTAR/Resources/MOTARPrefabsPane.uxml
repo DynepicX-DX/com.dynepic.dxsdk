@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:IMGUIContainer />
+    <ui:Box style="position: absolute; top: 35px; left: 5px; width: 400; height: 160;">
+        <ui:Label text="MOTAR Authentication" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 10px;" />
+        <ui:Toggle text="Login State Button:" display-tooltip-when-elided="true" value="true" style="position: relative; top: 25px; left: 16px;" />
+        <uie:ObjectField name="LOGINSTATEBUTTON_PREFAB" allow-scene-objects ="false" style="position: relative; width: 200px; top: 5px; left: 156px;" />
+        
+       <ui:Toggle text="Login UI Canvas:" display-tooltip-when-elided="true" value="true" style="position: relative; top: 25px; left: 16px;" />
+       <uie:ObjectField name="LOGINCANVAS_PREFAB" allow-scene-objects ="false" style="position: relative; width: 200px; top: 5px; left: 156px;" />
+
+      <ui:Toggle text="User Profile Canvas:" display-tooltip-when-elided="true" value="true" style="position: relative; top: 25px; left: 16px;" />
+      <uie:ObjectField name="USERPROFILE_PREFAB" allow-scene-objects ="false" style="position: relative; width: 200px; top: 5px; left: 156px;" />
+    </ui:Box>
+  <ui:Box style="position: absolute; top: 35px; left: 425px; width: 400; height: 160;">
+    <ui:Label text="Assessment Components" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 10px;" />
+    <ui:Toggle text="Start Module Button:" display-tooltip-when-elided="true" value="true" style="position: relative; top: 25px; left: 16px;" />
+    <uie:ObjectField name="STARTMODULE_PREFAB" allow-scene-objects ="false" style="position: relative; width: 200px; top: 5px; left: 156px;" />
+
+    <ui:Toggle text="Questions Canvas:" display-tooltip-when-elided="true" value="true" style="position: relative; top: 25px; left: 16px;" />
+    <uie:ObjectField name="QUESTIONS_PREFAB" allow-scene-objects ="false" style="position: relative; width: 200px; top: 5px; left: 156px;" />
+
+    <ui:Toggle text="Test Results Canvas:" display-tooltip-when-elided="true" value="true" style="position: relative; top: 25px; left: 16px;" />
+    <uie:ObjectField name="TESTRESULTS_PREFAB" allow-scene-objects ="false" style="position: relative; width: 200px; top: 5px; left: 156px;" />
+  </ui:Box>
+
+  <ui:Button name="SAVEPREFABSETTINGS" text=" Save Settings " display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 100px; left: 860px;" />
+  <ui:Button name="GENERATEPREFABS" text=" Add to Scene " display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 225px; left: 365px;" />
+</ui:UXML>

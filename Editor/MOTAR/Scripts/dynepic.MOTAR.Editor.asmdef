@@ -1,0 +1,24 @@
+{
+    "name": "dynepic.MOTAR.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:478a2357cc57436488a56e564b08d223",
+        "GUID:0ea6ba1ae22e9314ea819939cee75985",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+        "GUID:3f222f38a9e754da6904d27432f54aec",
+        "GUID:9b0a75464c0794ddeb6d0ad005c115ee",
+        "GUID:54b1fd37bc2934281a7a3261603a3023",
+        "GUID:da9f3680645f5ad46a2934240a128b5f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

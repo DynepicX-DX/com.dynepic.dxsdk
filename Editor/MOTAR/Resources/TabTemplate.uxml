@@ -1,0 +1,11 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+  <!-- Creates the button. -->
+  xsi:noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+  xsi:schemaLocation="UnityEngine.UIElements ../UIElementsSchema/UnityEngine.UIElements.xsd">
+
+ <!-- Creates the button. -->
+  <Button class="motar-tab">      
+    <!-- Adds a VisualElement child (corresponding to the button's icon). -->
+    <VisualElement class="motar-tab-image"/>   
+  </Button>
+</UXML>

@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" cui="DXCommunications" editor-extension-mode="False">
+    <ui:IMGUIContainer />
+    <ui:Box style="position: absolute; top: 10px; left: 250px; width: 400; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label text="HTTP METHOD \t ENDPOINT" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 5px;" />
+    </ui:Box>
+    <ui:Box name="APIENDPOINTS" style="position: absolute; top: 40px; left: 250px; width: 400; height: 130;">
+        <ui:ListView name="APIs" focusable="true" style="font: courier;" />
+    </ui:Box>
+    <ui:Box name="APISELECTIONINSTRUCTIONS" style="position: absolute; top: 200px; left: 250px; width: 400; height: 248px; border-left-color: rgb(7, 7, 7); border-right-color: rgb(7, 7, 7); border-top-color: rgb(7, 7, 7); border-bottom-color: rgb(7, 7, 7);">
+        <ui:Label text="Select API to see info:" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 5px;" />
+        <ui:Label text="Summary:" display-tooltip-when-elided="true" style="position: relative; top: 10px; left: 5px;" />
+        <ui:Label name="SUMMARY" display-tooltip-when-elided="true" style="position: relative; top: -5px; left: 100px;" />
+        <ui:Label text="Description:" display-tooltip-when-elided="true" style="position: relative; top: 25px; left: 5px;" />
+        <ui:Label name="DESCRIPTION" display-tooltip-when-elided="true" style="white-space: normal; width: 275px; left: 100px; bottom: 0; position: absolute; top: 70px; height: 100px; flex-wrap: wrap; align-items: flex-start;" />
+        <ui:Button text="More details on GitBook" display-tooltip-when-elided="true" name="LAUNCHWEB" style="top: 200px; width: 160px; left: 30%;" />
+    </ui:Box>
+    <ui:Box name="CODEGENERATION" style="position: absolute; top: 200px; left: 669px; width: 350px; height: 249px; border-left-color: rgb(2, 2, 2); border-right-color: rgb(2, 2, 2); border-top-color: rgb(2, 2, 2); border-bottom-color: rgb(2, 2, 2);">
+        <ui:Label text="Code Snippet:  requires the DXCommunications namespace&#x9;" display-tooltip-when-elided="true" style="top: 5px; left: 5px;" />
+        <ui:Button text="&#10;" display-tooltip-when-elided="true" name="CLIPBOARD" focusable="true" style="left: 105%; top: 0; width: 32px; background-image: url(&apos;/Packages/com.dynepic.dxsdk/Runtime/MOTAR/MOTAR_Images/clip.png&apos;); background-color: rgb(250, 249, 249); height: 43px;" />
+        <ui:TextField picking-mode="Ignore" name="SampleCode" />
+    </ui:Box>
+</ui:UXML>

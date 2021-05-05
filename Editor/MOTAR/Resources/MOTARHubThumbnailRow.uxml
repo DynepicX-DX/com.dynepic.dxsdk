@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" cui="DXCommunications" editor-extension-mode="False">
+    <ui:Template name="MyHubThumbnail" src="MOTARModelHubThumbnail.uxml" />
+    <ui:VisualElement class="HubThumbnailRow" style="height: 184px; top: 50px; bottom: 50px; width: auto;">
+        <ui:Instance template="MyHubThumbnail" name="obj1" style="position: absolute; width: auto; top: auto; left: 8.12%; height: auto;" />
+        <ui:Instance template="MyHubThumbnail" name="obj2" style="position: absolute; width: auto; top: auto; left: 29.76%; height: auto;" />
+        <ui:Instance template="MyHubThumbnail" name="obj3" style="position: absolute; width: auto; top: auto; left: 51.41%; height: auto;" />
+        <ui:Instance template="MyHubThumbnail" name="obj4" style="position: absolute; width: auto; top: auto; left: 73.06%; height: auto;" />
+    </ui:VisualElement>
+</ui:UXML>
