@@ -17,7 +17,9 @@
     "com.unity.textmeshpro": "3.0.1",
     "com.unity.ui": "1.0.0-preview.14",
     "com.unity.ui.builder": "1.0.0-preview.14",
-    "com.unity.nuget.newtonsoft-json": "2.0.0"
+    "com.unity.nuget.newtonsoft-json": "2.0.0",
+    "com.unity.modules.uielementsnative": "1.0.0",
+    "com.unity.textore": "1.0.0-preview.2"
   },
   "author": {
     "name": "Dynepic",
