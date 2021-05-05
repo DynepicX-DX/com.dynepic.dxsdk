@@ -2,7 +2,9 @@
     "name": "dynepic.MOTAR.runtime",
     "rootNamespace": "",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:3f222f38a9e754da6904d27432f54aec",
+        "GUID:54b1fd37bc2934281a7a3261603a3023"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
