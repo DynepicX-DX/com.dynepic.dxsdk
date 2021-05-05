@@ -119,12 +119,12 @@ public class MOTARSetupWindow : EditorWindow
             {
                 //var myBoxList = root.Query<Box>().ToList();
                 var myBox = root.Query<Box>().ToList().Find(x => x.name == "SandboxUserSelection");
-                var xy = root.Query<DropdownField>().ToList().Find(z => z.name == "USERNAMES");
+                var xy = root.Query<VisualElement>().ToList().Find(z => z.name == "USERNAMES");
                 if (xy != null)
                     myBox.Remove(xy);
                 DropdownField dtf = new DropdownField(DropDownSandboxUserChoices, 0);
                 
-                myBox.Add(dtf);
+                myBox.Add((VisualElement)dtf);
                 // dtf.BindProperty()
                 dtf.name = "USERNAMES";
 
