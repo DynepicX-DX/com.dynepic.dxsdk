@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: 412fa8f45e54fde49ac05b5a76042491
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cockpit
+    100002: Exterior
+    100004: //RootNode
+    100006: FPole1
+    100008: FPole2
+    100010: FrontUndercarriageFlap
+    100012: FrontWheel
+    100014: LeftFlap
+    100016: LeftRearWing
+    100018: LeftTire
+    100020: LeftUndercarriageFlap
+    100022: LeftWheel
+    100024: Pole1
+    100026: Pole1 1
+    100028: Pole2
+    100030: Pole2 1
+    100032: RightFlap
+    100034: RightRearWing
+    100036: RightTire
+    100038: RightUndercarriageFlap
+    100040: RightWheel
+    100042: Screen
+    100044: TailFlap
+    400000: Cockpit
+    400002: Exterior
+    400004: //RootNode
+    400006: FPole1
+    400008: FPole2
+    400010: FrontUndercarriageFlap
+    400012: FrontWheel
+    400014: LeftFlap
+    400016: LeftRearWing
+    400018: LeftTire
+    400020: LeftUndercarriageFlap
+    400022: LeftWheel
+    400024: Pole1
+    400026: Pole1 1
+    400028: Pole2
+    400030: Pole2 1
+    400032: RightFlap
+    400034: RightRearWing
+    400036: RightTire
+    400038: RightUndercarriageFlap
+    400040: RightWheel
+    400042: Screen
+    400044: TailFlap
+    2100000: GlassShader
+    2100002: ExteriorShader
+    2100004: BlackMetalShader
+    2100006: DialsShader
+    2100008: lambert2
+    2300000: Cockpit
+    2300002: Exterior
+    2300004: FPole1
+    2300006: FPole2
+    2300008: FrontUndercarriageFlap
+    2300010: FrontWheel
+    2300012: LeftFlap
+    2300014: LeftRearWing
+    2300016: LeftTire
+    2300018: LeftUndercarriageFlap
+    2300020: LeftWheel
+    2300022: Pole1
+    2300024: Pole1 1
+    2300026: Pole2
+    2300028: Pole2 1
+    2300030: RightFlap
+    2300032: RightRearWing
+    2300034: RightTire
+    2300036: RightUndercarriageFlap
+    2300038: RightWheel
+    2300040: Screen
+    2300042: TailFlap
+    3300000: Cockpit
+    3300002: Exterior
+    3300004: FPole1
+    3300006: FPole2
+    3300008: FrontUndercarriageFlap
+    3300010: FrontWheel
+    3300012: LeftFlap
+    3300014: LeftRearWing
+    3300016: LeftTire
+    3300018: LeftUndercarriageFlap
+    3300020: LeftWheel
+    3300022: Pole1
+    3300024: Pole1 1
+    3300026: Pole2
+    3300028: Pole2 1
+    3300030: RightFlap
+    3300032: RightRearWing
+    3300034: RightTire
+    3300036: RightUndercarriageFlap
+    3300038: RightWheel
+    3300040: Screen
+    3300042: TailFlap
+    4300000: Exterior
+    4300002: Cockpit
+    4300004: Screen
+    4300006: LeftRearWing
+    4300008: RightRearWing
+    4300010: LeftFlap
+    4300012: RightFlap
+    4300014: TailFlap
+    4300016: FrontUndercarriageFlap
+    4300018: FrontWheel
+    4300020: FPole1
+    4300022: FPole2
+    4300024: LeftUndercarriageFlap
+    4300026: LeftWheel
+    4300028: Pole1
+    4300030: LeftTire
+    4300032: Pole2
+    4300034: RightUndercarriageFlap
+    4300036: RightWheel
+    4300038: Pole1
+    4300040: RightTire
+    4300042: Pole2
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
