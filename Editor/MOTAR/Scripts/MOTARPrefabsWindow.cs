@@ -7,6 +7,7 @@ using Unity;
 using DXCommunications;
 using UnityEngine.EventSystems;
 
+
 public class MOTARPrefabsWindow : EditorWindow
 {
     public static bool WasActive = false;
@@ -167,6 +168,8 @@ public class MOTARPrefabsWindow : EditorWindow
         if (GameObject.Find("EventSystem") == null)
         {
             var eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+
+            //TMPro.TMP_PackageUtilities.ImportProjectResourcesMenu();
         }
 
     }

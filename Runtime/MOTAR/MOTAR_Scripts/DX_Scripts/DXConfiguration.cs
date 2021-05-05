@@ -48,11 +48,14 @@ namespace DXCommunications
             {
                 //Debug.LogError("CALLING ENABLE FROM...");
                 var newConfig = Resources.Load("DX Configuration") as DXConfiguration;
-                environment = DXEnvironment.Sandbox;
-                clientID = newConfig.clientID;
-                clientSecret = newConfig.clientSecret;
-                Name = newConfig.Name;
-                Description = newConfig.Description;
+                if (newConfig != null)
+                {
+                    environment = DXEnvironment.Sandbox;
+                    clientID = newConfig.clientID;
+                    clientSecret = newConfig.clientSecret;
+                    Name = newConfig.Name;
+                    Description = newConfig.Description;
+                }
             }
 
         }
