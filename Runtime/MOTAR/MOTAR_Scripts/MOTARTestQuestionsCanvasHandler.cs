@@ -24,6 +24,7 @@ public class MOTARTestQuestionsCanvasHandler : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        MOTARStateMachineHandler.UpdateOfflineMessagesIfAny();
     }
     void Start()
     {

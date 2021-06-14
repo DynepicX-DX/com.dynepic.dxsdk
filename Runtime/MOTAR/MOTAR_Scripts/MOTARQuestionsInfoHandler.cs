@@ -11,8 +11,8 @@ public class MOTARQuestionsInfoHandler : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-      //  dip.
+        MOTARStateMachineHandler.UpdateOfflineMessagesIfAny();
+        //  dip.
 
     }
     // Start is called before the first frame update

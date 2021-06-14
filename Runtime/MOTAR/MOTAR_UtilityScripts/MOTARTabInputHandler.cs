@@ -13,6 +13,7 @@ public class MOTARTabInputHandler : MonoBehaviour
     private void Start()
     {
         system = EventSystem.current;
+        
     }
 
     private void Update()

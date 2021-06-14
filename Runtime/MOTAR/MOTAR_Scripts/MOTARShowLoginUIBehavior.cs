@@ -24,7 +24,7 @@ public class MOTARShowLoginUIBehavior : StateMachineBehaviour
                 if (MOTARLoginCanvasHandler.instance == null)
                 {
                     Debug.Log("MOTAR: Instantiating Login Form prefab...");
-                    GameObject goLoginCanvas = (GameObject)Instantiate(MOTARUnityObjectSettingsHandler.instance.MOTARLoginPromptLocation);
+                    GameObject goLoginCanvas = (GameObject)Instantiate(MOTARUnityObjectSettingsHandler.instance.MOTARLoginPromptLocation,MOTARStateMachineHandler.instance.MOTARParent);
                 }
                 else
                 {

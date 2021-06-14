@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using System.Reflection;
 using DXCommunications;
+using Newtonsoft.Json;
 
 public class MOTARStateMachineHandler : MonoBehaviour
 {
@@ -16,11 +17,23 @@ public class MOTARStateMachineHandler : MonoBehaviour
 
     public Animator MOTARRuntimeStateMachine;
     public DXProfile profile;
-     
+
+    private bool IsInternetReachable = true;
+    private bool WasInternetReachable = true;
+
+    public Transform MOTARParent;
+
+    public bool TestInternet;
+    public bool NewInternetStatus = true;
+    DXAppLessonData dXAppLessonData;
+
     private void Awake()
     {
         instance = this;
+        MOTARParent = transform.parent;
         MOTARRuntimeStateMachine = GetComponent<Animator>();
+
+        dXAppLessonData = Resources.Load<DXAppLessonData>("DxAppData");
     }
     // Start is called before the first frame update
     void Start()
@@ -59,7 +72,59 @@ public class MOTARStateMachineHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        IsInternetReachable = Application.internetReachability != NetworkReachability.NotReachable;
+        if (TestInternet)
+            if (IsInternetReachable != NewInternetStatus)
+                IsInternetReachable = NewInternetStatus;
+        if (IsInternetReachable != WasInternetReachable)
+        {
+            WasInternetReachable = IsInternetReachable;
+            MOTARRuntimeStateMachine.SetBool("InternetConnectionLost", !IsInternetReachable);
+
+            UpdateOfflineMessagesIfAny();
+
+            string attemptedClassId = dXAppLessonData.dxClass.groupId;
+            string attemptedLessonId = dXAppLessonData.dxLesson.lessonId;
+
+            Dictionary<string, string> o = new Dictionary<string, string>();
+            o["lessonId"] = attemptedLessonId;
+            o["classId"] = attemptedClassId;
+            //o["studentId"] = profile.userId;
+
+            string verb = IsInternetReachable ? "Internet Reconnected" : "Internet Disconnected";
+
+            string sBody = JsonConvert.SerializeObject(o);
+            DXCommunicationLayer.AddXApiStatement(verb, profile.userId, sBody);
+
+           
+          
+            //MOTARRuntimeStateMachine.SetTrigger("InternetStatusChanged");
+            //IternetDownStatus.SetActive(!IsInternetReachable);
+
+        }
+    }
+    public static void UpdateOfflineMessagesIfAny()
+    {
+        bool bActivate = Application.internetReachability == NetworkReachability.NotReachable;
+        Text[] texts = instance.MOTARParent.GetComponentsInChildren<Text>(true);
+        if (texts != null)
+        {
+            foreach(Text tx in texts)
+                if(tx.name == "Offline_Text")
+                    tx.gameObject.SetActive(bActivate);
+        }
         
+        if(!bActivate && DXCommunicationLayer.DXOfflineUpdates != null)
+        {
+            
+            foreach(DXOfflineActivityQueueEntry daqe in DXCommunicationLayer.DXOfflineUpdates)
+            {
+                string api = daqe.apiEndpoint;
+                string sBody = daqe.apiParametersJson;
+                instance.StartCoroutine(DXCommunicationLayer.DXPostAPIRequest<DXLessonProgress>(api, sBody, null));
+            }
+            
+        }
     }
     public void LoginComplete(DXProfile userProfile)
     {
@@ -94,7 +159,7 @@ public class MOTARStateMachineHandler : MonoBehaviour
         if (MOTARTestQuestionsCanvasHandler.instance != null)
             Destroy(MOTARTestQuestionsCanvasHandler.instance);
         //{
-            GameObject go = (GameObject)Instantiate(MOTARUnityObjectSettingsHandler.instance.MOTARTestQuestionsCanvas);
+            GameObject go = (GameObject)Instantiate(MOTARUnityObjectSettingsHandler.instance.MOTARTestQuestionsCanvas,MOTARStateMachineHandler.instance.MOTARParent);
         //}
         //else
           //  MOTARTestQuestionsCanvasHandler.instance.GetComponent<Canvas>().enabled = true;

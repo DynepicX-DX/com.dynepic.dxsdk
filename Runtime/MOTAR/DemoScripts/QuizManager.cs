@@ -191,24 +191,7 @@ public class QuizManager : MonoBehaviour
             else
                 Debug.LogError("Post Update Assesment error");
         });
-        //try
-        //{
-        //    DXAssessmentClient.Instance.UpdateStudentAssessmentAnswers(correct, pquestion,
-        //            correctIndex, cid, lid, (error, lessonProgress) =>
-        //            {
-        //                if (error != null)
-        //                    Debug.LogError("error:" + error.Message);
-        //                else
-        //                    ;
-
-
-        //                //        });
-        //            });
-        //}
-        //catch
-        //{
-
-        //}
+      
     }
     public void NextQuestion()
     {
@@ -244,13 +227,7 @@ public class QuizManager : MonoBehaviour
                 //Michsky.UI.ModernUIPack.ProgressBar.CurrentScore = iScore;
                 //MOTARTestResultsCanvasHandler.instance.TextScore.text = iScore.ToString();
                 MOTARTestResultsCanvasHandler.iScore = iScore;
-                //DXLessonClient.Instance.UpdateStudentsProgress(attemptedClassId, attemptedLessonId, pass, completion: (error, lessonProgress) =>
-                //{
-                //    if (error != null)
-                //        Debug.LogError("error:" + error.Message);
-                //    else
-                //        Debug.Log("progress:" + lessonProgress.ToString());
-                //},null,true,null, correctAnswers, TestStart.ToString(),System.DateTime.Now.ToString());
+               
                 DXCommunicationLayer.UpdateStudentsProgress(attemptedClassId,attemptedLessonId,pass,completion:(lessonProgress)=>
 
                 {

@@ -13,7 +13,7 @@ public class MOTARShowStartModuleButtonBehavior : StateMachineBehaviour
             if (MOTARUserInfoCanvasHandler.instance == null)
             {
 
-                GameObject goNew = Instantiate((GameObject)(MOTARUnityObjectSettingsHandler.instance.MOTARUserInfoCanvasHandler));
+                GameObject goNew = Instantiate((GameObject)(MOTARUnityObjectSettingsHandler.instance.MOTARUserInfoCanvasHandler),MOTARStateMachineHandler.instance.MOTARParent);
             }
             else
             {
@@ -26,7 +26,7 @@ public class MOTARShowStartModuleButtonBehavior : StateMachineBehaviour
             if (MOTARStartModuleButtonHandler.instance == null)
             {
 
-                GameObject goNew = Instantiate((GameObject)(MOTARUnityObjectSettingsHandler.instance.MOTARStartModuleButtonHandler));
+                GameObject goNew = Instantiate((GameObject)(MOTARUnityObjectSettingsHandler.instance.MOTARStartModuleButtonHandler),MOTARStateMachineHandler.instance.MOTARParent);
             }
             else
             {

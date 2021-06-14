@@ -21,8 +21,8 @@ public class MOTARLoginStateButtonHandler : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-           
 
+            MOTARStateMachineHandler.UpdateOfflineMessagesIfAny();
         }
     }
 

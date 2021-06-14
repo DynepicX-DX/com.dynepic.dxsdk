@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 namespace DXCommunications
 {
-    public enum DXEnvironment { Sandbox, Production }
+    public enum DXEnvironment { Sandbox, Production, Development, FromConfiguration }
     public enum APIErrorCode
     {
         //    400
@@ -67,6 +67,15 @@ namespace DXCommunications
         //    505
         APP_VERSION_NO_LONGER_SUPPORTED = 5051
     }
+   [Serializable]
+    public class DXOfflineActivityQueueEntry
+    {
+        public DateTime queEntryTime;
+        public string apiEndpoint;
+        public string apiParametersJson;
+    }
+
+    
     public class DXUrl
     {
         public static DXConfiguration dXConfiguration;
@@ -80,27 +89,35 @@ namespace DXCommunications
         }
 
 
-        public static string Host
+        public static string Host(DXEnvironment environment = DXEnvironment.FromConfiguration)
         {
-
-            get
+            DXEnvironment env = environment;
+            if(env == DXEnvironment.FromConfiguration)
             {
-
-                if (dXConfiguration == null)
+                if(dXConfiguration == null)
                     dXConfiguration = ScriptableObject.CreateInstance<DXConfiguration>();
-                switch (dXConfiguration.environment)
-                {
-                    case DXEnvironment.Production:
-                        return "https://api.motar.io";
-                    default:
-                        return "https://sandbox.motar.io";
-                }
+                env = dXConfiguration.environment;
             }
+            
+            switch (env)
+            {
+                case DXEnvironment.Production:
+                    return "https://api.motar.io";
+                case DXEnvironment.Sandbox:
+                    return "https://sandbox.motar.io";
+                case DXEnvironment.Development:
+                    return "https://api.motar-dev.com";
+
+                default:
+                    return "https://sandbox.motar.io";
+
+            }
+            
         }
 
-        public static string endpoint(string EndOfEndpoint)
+        public static string endpoint(string EndOfEndpoint,DXEnvironment env = DXEnvironment.FromConfiguration)
         {
-            return Host + "/" + EndOfEndpoint;
+            return Host(env) + "/" + EndOfEndpoint;
         }
 
 
@@ -108,7 +125,7 @@ namespace DXCommunications
     
     public class DXCommunicationLayer : ScriptableObject
     {
-
+        public static Queue<DXOfflineActivityQueueEntry> DXOfflineUpdates;
         public static DXConfiguration dXConfiguration;
         public static string AccessToken
         {
@@ -161,7 +178,7 @@ namespace DXCommunications
 
             // var encoded = Encoding.UTF8.GetString(data);
 
-            string url = DXUrl.endpoint("oauth/token");// "https://api.motar.io/oauth/token";
+            string url = DXUrl.endpoint("oauth/token", DXEnvironment.Sandbox);// "https://api.motar.io/oauth/token";
            
 
             using (UnityWebRequest webRequest = new UnityWebRequest(url))
@@ -194,8 +211,14 @@ namespace DXCommunications
                         Debug.Log("received login RESPONSE at " + System.DateTime.Now);
                         Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
                         var headers = webRequest.GetResponseHeaders();
-                        headers.TryGetValue("accesstoken", out string accessToken);
-                        headers.TryGetValue("refreshtoken", out string refreshToken);
+                        if (headers.ContainsKey("accesstoken"))
+                            headers["access_token"] = headers["accesstoken"];
+                        if (headers.ContainsKey("refreshtoken"))
+                            headers["refresh_token"] = headers["refreshtoken"];
+                        headers.TryGetValue("access_token", out string accessToken);
+                      
+                        headers.TryGetValue("refresh_token", out string refreshToken);
+                        
                         AccessToken = accessToken;
                         RefreshToken = refreshToken;
 
@@ -339,7 +362,7 @@ namespace DXCommunications
                         break;
                     case UnityWebRequest.Result.Success:
                         Debug.Log("received binary api RESPONSE at " + System.DateTime.Now);
-
+                       // yield return DXRefreshToken();
                         try
                         {
                             var data = webRequest.downloadHandler.data;
@@ -427,6 +450,38 @@ namespace DXCommunications
                 }
             }
         }
+
+        public static void AddXApiStatement(string verb,string studentID,string sObjectBody)
+        {
+            // Don't forget to use the DXCommunications namespace
+
+            //Note HEADER parameters are used for authentication and are set automatically by the API
+
+            Dictionary<string, object> body = new Dictionary<string, object>();
+
+            body["timestamp"] = DateTime.Now.ToString();
+            body["actor"] = studentID;
+            body["verb"] = verb;
+            body["object"] = sObjectBody;
+
+            string sBody = JsonConvert.SerializeObject(body);
+            // Don't forget to use the DXCommunications namespace
+
+            //Note HEADER parameters are used for authentication and are set automatically by the API
+
+            string api = "edu/v1/xapi/statement";
+           
+            //if (DXCommunicationLayer.DXOfflineUpdates == null)
+            //    DXCommunicationLayer.DXOfflineUpdates = new Queue<DXOfflineActivityQueueEntry>();
+            //DXOfflineActivityQueueEntry doae = new DXOfflineActivityQueueEntry();
+            //doae.queEntryTime = System.DateTime.Now;
+            //doae.apiEndpoint = api;
+            //doae.apiParametersJson = sBody;
+            //DXCommunicationLayer.DXOfflineUpdates.Enqueue(doae);
+
+
+            MOTARStateMachineHandler.instance.StartCoroutine(DXPostAPIRequest<DXLessonProgress>(api, sBody, null));
+        }
         public static void UpdateStudentAssessmentAnswers(bool correct, string answer, int questionIndex, string classID, string lessonID, Action<DXLessonProgress> completion)
         {
             var body = new UpdateProgressBody
@@ -441,6 +496,15 @@ namespace DXCommunications
 
             string api = "edu/v1/assessment/progress";
             string sBody = JsonConvert.SerializeObject(body);
+            //if (DXCommunicationLayer.DXOfflineUpdates == null)
+            //    DXCommunicationLayer.DXOfflineUpdates = new Queue<DXOfflineActivityQueueEntry>();
+            //DXOfflineActivityQueueEntry doae = new DXOfflineActivityQueueEntry();
+            //doae.queEntryTime = System.DateTime.Now;
+            //doae.apiEndpoint = api;
+            //doae.apiParametersJson = sBody;
+            //DXCommunicationLayer.DXOfflineUpdates.Enqueue(doae);
+
+           
             MOTARStateMachineHandler.instance.StartCoroutine(DXPostAPIRequest<DXLessonProgress>(api, sBody, completion));
         }
         public static void UpdateStudentsProgress(string classId, string lessonId, bool pass, Action<DXLessonProgress> completion,
@@ -464,123 +528,151 @@ namespace DXCommunications
 
             string api = "edu/v1/lesson/progress";
             string sBody = JsonConvert.SerializeObject(body);
+            //if (DXCommunicationLayer.DXOfflineUpdates == null)
+            //    DXCommunicationLayer.DXOfflineUpdates = new Queue<DXOfflineActivityQueueEntry>();
+            //DXOfflineActivityQueueEntry doae = new DXOfflineActivityQueueEntry();
+            //doae.queEntryTime = System.DateTime.Now;
+            //doae.apiEndpoint = api;
+            //doae.apiParametersJson = sBody;
+            //DXCommunicationLayer.DXOfflineUpdates.Enqueue(doae);
             MOTARStateMachineHandler.instance.StartCoroutine(DXPostAPIRequest<DXLessonProgress>(api, sBody, completion));
         }
         public static IEnumerator DXPostAPIRequest<T>(string api, string json, Action<T> completion)
         {
-           
+            if (DXCommunicationLayer.DXOfflineUpdates == null)
+                DXCommunicationLayer.DXOfflineUpdates = new Queue<DXOfflineActivityQueueEntry>();
+            DXOfflineActivityQueueEntry doae = new DXOfflineActivityQueueEntry();
+            doae.queEntryTime = System.DateTime.Now;
+            doae.apiEndpoint = api;
+            doae.apiParametersJson = json;
 
-            if (dXConfiguration == null)
-                dXConfiguration = ScriptableObject.CreateInstance<DXConfiguration>();
-
-
-
-            var data = Encoding.UTF8.GetBytes(json);
-            UnityWebRequest webRequest = new UnityWebRequest(DXUrl.endpoint(api));
-            webRequest.method = UnityWebRequest.kHttpVerbPOST;
-            webRequest.uploadHandler = new UploadHandlerRaw(data);
-            webRequest.uploadHandler.contentType = "application/json";
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("clientId", dXConfiguration.clientID);
-            webRequest.SetRequestHeader("Authorization", "Bearer " + AccessToken);
-
-            yield return webRequest.SendWebRequest();
-
-
-            switch (webRequest.result)
+            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                case UnityWebRequest.Result.ConnectionError:
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(": Error: " + webRequest.error);
-                    break;
-                case UnityWebRequest.Result.ProtocolError:
-                    Debug.LogError(": HTTP Error: " + webRequest.error);
-                    Debug.LogError("DETAILS:" + webRequest.downloadHandler.text);
-                    
-                    break;
-                case UnityWebRequest.Result.Success:
-                    Debug.Log("received login RESPONSE at " + System.DateTime.Now);
-                    Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
 
 
-
-
-                    string outJson = webRequest.downloadHandler.text;
-
-                  
-                    var OutCompletion = JsonUtility.FromJson<T>(outJson);
-                    completion(OutCompletion);
-
-
-                    break;
-
-                default:
-                    Exception error = null;
-                    error = JsonUtility.FromJson<DXError>(webRequest.downloadHandler.text);
-                    break;
+                
+                DXCommunicationLayer.DXOfflineUpdates.Enqueue(doae);
             }
+            else
+            {
 
+                if (dXConfiguration == null)
+                    dXConfiguration = ScriptableObject.CreateInstance<DXConfiguration>();
+
+
+
+                var data = Encoding.UTF8.GetBytes(json);
+                UnityWebRequest webRequest = new UnityWebRequest(DXUrl.endpoint(api));
+                webRequest.method = UnityWebRequest.kHttpVerbPOST;
+                webRequest.uploadHandler = new UploadHandlerRaw(data);
+                webRequest.uploadHandler.contentType = "application/json";
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("clientId", dXConfiguration.clientID);
+                webRequest.SetRequestHeader("Authorization", "Bearer " + AccessToken);
+
+                yield return webRequest.SendWebRequest();
+
+
+                switch (webRequest.result)
+                {
+                    case UnityWebRequest.Result.ConnectionError:
+                        Debug.LogError(": Connection Error: " + webRequest.error);
+                        DXCommunicationLayer.DXOfflineUpdates.Enqueue(doae);
+                        break;
+                    case UnityWebRequest.Result.DataProcessingError:
+                        Debug.LogError(": Data Processing Error: " + webRequest.error);
+                        break;
+                    case UnityWebRequest.Result.ProtocolError:
+                        Debug.LogError(": HTTP Error: " + webRequest.error);
+                        Debug.LogError("DETAILS:" + webRequest.downloadHandler.text);
+
+                        break;
+                    case UnityWebRequest.Result.Success:
+                        Debug.Log("received login RESPONSE at " + System.DateTime.Now);
+                        Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
+
+
+
+
+                        string outJson = webRequest.downloadHandler.text;
+
+
+                        var OutCompletion = JsonUtility.FromJson<T>(outJson);
+                        if (completion != null)
+                            completion(OutCompletion);
+
+
+                        break;
+
+                    default:
+                        Exception error = null;
+                        error = JsonUtility.FromJson<DXError>(webRequest.downloadHandler.text);
+                        break;
+                }
+
+            }
+          
 
 
 
         }
-        public static IEnumerator DXPostAPIRequest(string api, string json, Action<string> completion)
-        {
+        //public static IEnumerator DXPostAPIRequest(string api, string json, Action<string> completion)
+        //{
 
 
-            if (dXConfiguration == null)
-                dXConfiguration = ScriptableObject.CreateInstance<DXConfiguration>();
-
-
-
-            var data = Encoding.UTF8.GetBytes(json);
-            UnityWebRequest webRequest = new UnityWebRequest(DXUrl.endpoint(api));
-            webRequest.method = UnityWebRequest.kHttpVerbPOST;
-            webRequest.uploadHandler = new UploadHandlerRaw(data);
-            webRequest.uploadHandler.contentType = "application/json";
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("clientId", dXConfiguration.clientID);
-            webRequest.SetRequestHeader("Authorization", "Bearer " + AccessToken);
-
-            yield return webRequest.SendWebRequest();
-
-
-            switch (webRequest.result)
-            {
-                case UnityWebRequest.Result.ConnectionError:
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(": Error: " + webRequest.error);
-                    break;
-                case UnityWebRequest.Result.ProtocolError:
-                    Debug.LogError(": HTTP Error: " + webRequest.error);
-
-                    break;
-                case UnityWebRequest.Result.Success:
-                    Debug.Log("received login RESPONSE at " + System.DateTime.Now);
-                    Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
+        //    if (dXConfiguration == null)
+        //        dXConfiguration = ScriptableObject.CreateInstance<DXConfiguration>();
 
 
 
+        //    var data = Encoding.UTF8.GetBytes(json);
+        //    UnityWebRequest webRequest = new UnityWebRequest(DXUrl.endpoint(api));
+        //    webRequest.method = UnityWebRequest.kHttpVerbPOST;
+        //    webRequest.uploadHandler = new UploadHandlerRaw(data);
+        //    webRequest.uploadHandler.contentType = "application/json";
+        //    webRequest.downloadHandler = new DownloadHandlerBuffer();
+        //    webRequest.SetRequestHeader("clientId", dXConfiguration.clientID);
+        //    webRequest.SetRequestHeader("Authorization", "Bearer " + AccessToken);
 
-                    string outJson = webRequest.downloadHandler.text;
+        //    yield return webRequest.SendWebRequest();
+
+
+        //    switch (webRequest.result)
+        //    {
+        //        case UnityWebRequest.Result.ConnectionError:
+        //        case UnityWebRequest.Result.DataProcessingError:
+        //            Debug.LogError(": Error: " + webRequest.error);
+        //            break;
+        //        case UnityWebRequest.Result.ProtocolError:
+        //            Debug.LogError(": HTTP Error: " + webRequest.error);
+
+        //            break;
+        //        case UnityWebRequest.Result.Success:
+        //            Debug.Log("received login RESPONSE at " + System.DateTime.Now);
+        //            Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
+
+
+
+
+        //            string outJson = webRequest.downloadHandler.text;
 
 
                     
-                    completion(outJson);
+        //            completion(outJson);
 
 
-                    break;
+        //            break;
 
-                default:
-                    Exception error = null;
-                    error = JsonUtility.FromJson<DXError>(webRequest.downloadHandler.text);
-                    break;
-            }
-
-
+        //        default:
+        //            Exception error = null;
+        //            error = JsonUtility.FromJson<DXError>(webRequest.downloadHandler.text);
+        //            break;
+        //    }
 
 
-        }
+
+
+        //}
         private static string QueryString(IDictionary<string, object> dict)
         {
             var list = new List<string>();

@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Utilities;
 
-using DXCommunications;
+
 using System.Net.Http;
 
 namespace DXCommunications
@@ -74,9 +74,10 @@ namespace DXCommunications
 
             var data = Encoding.UTF8.GetBytes(json);
 
-           // var encoded = Encoding.UTF8.GetString(data);
+            // var encoded = Encoding.UTF8.GetString(data);
 
-            string url = "https://api.motar.io/sdk/v1/auth/login";
+            //string url = "https://api.motar.io/sdk/v1/auth/login";
+            string url = DXUrl.endpoint("sdk/v1/auth/login", DXEnvironment.Production);
            
             using (UnityWebRequest webRequest = new UnityWebRequest(url))
             {
@@ -146,7 +147,8 @@ namespace DXCommunications
 
             // var encoded = Encoding.UTF8.GetString(data);
 
-            string url = "https://api.motar.io/sdk/v1/auth/refresh";
+            //string url = "https://api.motar.io/sdk/v1/auth/refresh";
+            string url = DXUrl.endpoint("sdk/v1/auth/refresh",DXEnvironment.Production);
             DevAccessToken = "";
             DevRefreshToken = "";
 
@@ -202,7 +204,8 @@ namespace DXCommunications
 
         public static IEnumerator MOTARDeveloperHubListings()
         {
-            string url = "https://api.motar.io/sdk/v1/listing/list";
+            //string url = "https://api.motar.io/sdk/v1/listing/list";
+            string url =   DXUrl.endpoint("sdk/v1/listing/list",DXEnvironment.Development);
             //string searchURL = "https://api.motar.io/sdk/v1/listing/search/model";
             using (UnityWebRequest webRequest = new UnityWebRequest(url))
             {
@@ -266,7 +269,8 @@ namespace DXCommunications
 
             //DXConfiguration dXConfiguration = (DXConfiguration)CreateInstance(typeof(DXConfiguration));
             //string url = "https://api.motar.io/sdk/v1/auth/login";
-            string url = "https://api.motar.io/sdk/v1/auth/sandbox/login";
+            //string url = "https://api.motar.io/sdk/v1/auth/sandbox/login";
+            string url = DXUrl.endpoint("sdk/v1/auth/sandbox/login",DXEnvironment.Production);
 
             using (UnityWebRequest webRequest = new UnityWebRequest(url))
             {
@@ -353,8 +357,8 @@ namespace DXCommunications
 
             //DXConfiguration dXConfiguration = (DXConfiguration)CreateInstance(typeof(DXConfiguration));
             //string url = "https://api.motar.io/sdk/v1//login";
-            string url = "https://api.motar.io/sdk/v1/training/clear-scores";
-
+            //string url = "https://api.motar.io/sdk/v1/training/clear-scores";
+            string url = DXUrl.endpoint("sdk/v1/training/clear-scores",DXEnvironment.Production);
             using (UnityWebRequest webRequest = new UnityWebRequest(url))
             {
                 webRequest.method = UnityWebRequest.kHttpVerbPOST;
@@ -577,7 +581,8 @@ namespace DXCommunications
         private static IEnumerator MOTARDeveloperEnumerateCompanyApps(DXDeveloperCompany dCompany)
         {
 
-            string url = "https://api.motar.io/sdk/v1/app/list?companyId=" + dCompany.id;
+            //string url = "https://api.motar.io/sdk/v1/app/list?companyId=" + dCompany.id;
+            string url = DXUrl.endpoint("sdk/v1/app/list?companyId=" + dCompany.id, DXEnvironment.Production);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
 
@@ -621,7 +626,7 @@ namespace DXCommunications
         private static IEnumerator MOTARDeveloperEnumerateCompanySandboxUsers(DXDeveloperCompany dCompany)
         {
 
-            string url = "https://api.motar.io/sdk/v1/user/list?companyId=" + dCompany.id;
+            string url = DXUrl.endpoint("sdk/v1/user/list?companyId=" + dCompany.id, DXEnvironment.Production);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
 
@@ -699,7 +704,8 @@ namespace DXCommunications
         public static IEnumerator MOTARDeveloperEnumerateCompanies()
         {
 
-            string url = "https://api.motar.io/sdk/v1/company/list";
+            //string url = "https://api.motar.io/sdk/v1/company/list";
+            string url = DXUrl.endpoint("sdk/v1/company/list",DXEnvironment.Production);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
 
@@ -757,7 +763,8 @@ namespace DXCommunications
             //internal static string myCoverPhoto = profileBase + "/my/profile/cover";
 
 
-            string url = "https://api.motar.io/sdk/v1/image/" + imageKey;
+            //string url = "https://api.motar.io/sdk/v1/image/" + imageKey;
+            string url = DXUrl.endpoint("sdk/v1/image/" + imageKey,DXEnvironment.Production);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
 

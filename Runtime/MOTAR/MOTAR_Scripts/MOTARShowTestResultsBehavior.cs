@@ -17,7 +17,7 @@ public class MOTARShowTestResultsBehavior : StateMachineBehaviour
                 if (MOTARTestResultsCanvasHandler.instance == null)
                 {
                     
-                    GameObject go = (GameObject)Instantiate(MOTARUnityObjectSettingsHandler.instance.MOTARTestResultsCanvasHandler);
+                    GameObject go = (GameObject)Instantiate(MOTARUnityObjectSettingsHandler.instance.MOTARTestResultsCanvasHandler,MOTARStateMachineHandler.instance.MOTARParent);
                 }
             }
     }

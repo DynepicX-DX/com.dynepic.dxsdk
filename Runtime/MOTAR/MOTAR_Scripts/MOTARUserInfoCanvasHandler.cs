@@ -13,19 +13,28 @@ public class MOTARUserInfoCanvasHandler : MonoBehaviour
     public GameObject LoginButton;
     public GameObject LogoutButton;
 
+    public GameObject InternetDownStatus;
+
     public Texture2D defaultImage;
     public Text userName;
     public RawImage userImage;
     public Texture2D userImageLoader;
     public int size = 128;
 
+   
+
     private void Awake()
     {
         userImageLoader = new Texture2D(size, size);
         instance = this;
+        MOTARStateMachineHandler.UpdateOfflineMessagesIfAny();
+
+
     }
     public void OnEnable()
     {
+        
+
         PopulateUserInfo();
     }
     //public void PopulateUserInfo()
@@ -66,33 +75,17 @@ public class MOTARUserInfoCanvasHandler : MonoBehaviour
             if (MOTARStateMachineHandler.instance.profile.profilePic != "" && MOTARStateMachineHandler.instance.profile.profilePic != null)
             {
 
-                //try
-                //{
+                //if (!MOTARStateMachineHandler.instance.MOTARRuntimeStateMachine.GetBool("InternetConnectionLost"))
+                {
 
-                //    DXImageClient.Instance.GetImage(MOTARStateMachineHandler.instance.profile.profilePic, (error, data) =>
-                //    {
-                //        if (error != null)
-                //        {
-                //            Debug.LogError("Error requesting image." + error.Message);
-                //        }
-                //        else
-                //        {
-                //            Debug.Log("Got image successfully.");
-
-                //            this.userImageLoader.LoadImage(data);
-                //            this.userImage.texture = this.userImageLoader;
-                //        }
-                //    });
-                //}
-                //catch
-                //{
-
-                //}
-
-
-
-                string command = "image/v1/static/" + MOTARStateMachineHandler.instance.profile.profilePic;
-                StartCoroutine(DXCommunicationLayer.DXBinaryAPIRequest(command, LoadImageFromData));
+                    //InternetDownStatus.SetActive(false);
+                    string command = "image/v1/static/" + MOTARStateMachineHandler.instance.profile.profilePic;
+                    StartCoroutine(DXCommunicationLayer.DXBinaryAPIRequest(command, LoadImageFromData));
+                }
+            //    else
+            //    {
+            //        //InternetDownStatus.SetActive(true);
+            //    }
             }
             
             userName.text = "Welcome " + MOTARStateMachineHandler.instance.profile.firstName + " " + MOTARStateMachineHandler.instance.profile.lastName;
@@ -116,6 +109,7 @@ public class MOTARUserInfoCanvasHandler : MonoBehaviour
     void Update()
     {
         //UpdateButtonStateOnAnimatorChange();
+       
     }
     void UpdateButtonStateOnAnimatorChange()
     {
