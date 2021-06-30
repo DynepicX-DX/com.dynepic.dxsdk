@@ -739,9 +739,13 @@ namespace DXCommunications
 
                         //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
                         companyList = JsonConvert.DeserializeObject<List<DXDeveloperCompany>>(json);
-                        
-                        yield return MOTARDeveloperEnumerateCompanyApps(companyList.Find(x=>x.name=="AwesomeVR"));
-                        yield return MOTARDeveloperEnumerateCompanySandboxUsers(companyList.Find(x => x.name == "AwesomeVR"));
+                        DXDeveloperCompany dxCompany = companyList[0];
+                        DXDeveloperCompany demoDxCompany = companyList.Find(x => x.name == "AwesomeVR");
+
+                        if (demoDxCompany != null)
+                            dxCompany = demoDxCompany;
+                        yield return MOTARDeveloperEnumerateCompanyApps(dxCompany);
+                        yield return MOTARDeveloperEnumerateCompanySandboxUsers(dxCompany);
                         break;
 
                     default:

@@ -3,3 +3,5 @@ Dynepic MOTAR Unity SDK
 First implementation using Unity's Package Manager
 [0.3.0] - 2021-06-14
 Offline Mode Prototype
+[0.3.1] - 2021-06-30
+Fix for organization list issues
