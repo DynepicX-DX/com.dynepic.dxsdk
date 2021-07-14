@@ -104,6 +104,7 @@ namespace DXCommunications
         public string profilePic;
         public string coverPhoto;
         public string media;
+        public bool isAssessment;
         public List<DXLesson> childLessons;
         public int expectedCompletionTime;
         public bool instructorGraded;

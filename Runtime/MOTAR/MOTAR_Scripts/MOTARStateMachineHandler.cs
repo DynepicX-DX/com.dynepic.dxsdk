@@ -7,6 +7,7 @@ using System.Reflection;
 using DXCommunications;
 using Newtonsoft.Json;
 
+
 public class MOTARStateMachineHandler : MonoBehaviour
 {
     
@@ -103,28 +104,36 @@ public class MOTARStateMachineHandler : MonoBehaviour
 
         }
     }
-    public static void UpdateOfflineMessagesIfAny()
+    static IEnumerator UpdateOfflineMessagesIfAnyAfterInstance()
     {
+        while (instance == null)
+            yield return 0;
+
         bool bActivate = Application.internetReachability == NetworkReachability.NotReachable;
         Text[] texts = instance.MOTARParent.GetComponentsInChildren<Text>(true);
         if (texts != null)
         {
-            foreach(Text tx in texts)
-                if(tx.name == "Offline_Text")
+            foreach (Text tx in texts)
+                if (tx.name == "Offline_Text")
                     tx.gameObject.SetActive(bActivate);
         }
-        
-        if(!bActivate && DXCommunicationLayer.DXOfflineUpdates != null)
+
+        if (!bActivate && DXCommunicationLayer.DXOfflineUpdates != null)
         {
-            
-            foreach(DXOfflineActivityQueueEntry daqe in DXCommunicationLayer.DXOfflineUpdates)
+
+            foreach (DXOfflineActivityQueueEntry daqe in DXCommunicationLayer.DXOfflineUpdates)
             {
                 string api = daqe.apiEndpoint;
                 string sBody = daqe.apiParametersJson;
                 instance.StartCoroutine(DXCommunicationLayer.DXPostAPIRequest<DXLessonProgress>(api, sBody, null));
             }
-            
+
         }
+    }
+    public static void UpdateOfflineMessagesIfAny()
+    {
+        MOTARLoginStateButtonHandler.instance.StartCoroutine(UpdateOfflineMessagesIfAnyAfterInstance());
+       
     }
     public void LoginComplete(DXProfile userProfile)
     {

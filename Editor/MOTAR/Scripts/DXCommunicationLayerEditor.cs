@@ -127,7 +127,7 @@ namespace DXCommunications
                 }
             }
 
-
+            
 
         }
         public static IEnumerator MOTARDeveloperRefreshDeveloperSession()
@@ -740,8 +740,9 @@ namespace DXCommunications
                         //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
                         companyList = JsonConvert.DeserializeObject<List<DXDeveloperCompany>>(json);
                         DXDeveloperCompany dxCompany = companyList[0];
-                        DXDeveloperCompany demoDxCompany = companyList.Find(x => x.name == "AwesomeVR");
-
+                        DXDeveloperCompany demoDxCompany = null; // companyList.Find(x => x.name == "Boeing");
+                        if(dxCompany.name.ToLower() == "dynepic")
+                            demoDxCompany = companyList.Find(x => x.name == "AwesomeVR");
                         if (demoDxCompany != null)
                             dxCompany = demoDxCompany;
                         yield return MOTARDeveloperEnumerateCompanyApps(dxCompany);

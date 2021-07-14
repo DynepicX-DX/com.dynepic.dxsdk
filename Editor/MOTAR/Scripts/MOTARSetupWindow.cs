@@ -55,7 +55,7 @@ public class MOTARSetupWindow : EditorWindow
         // Sets a minimum size to the window.
         window.minSize = new Vector2(250, 400);
 
-
+        
 
 
     }
@@ -234,7 +234,11 @@ public class MOTARSetupWindow : EditorWindow
                         thisAppsTest.dxClass = dxClassforCourse;
                         warningLabel.visible = false;
                         labels.Find(x => x.name == "COURSENAME").text = dxClassforCourse.course.name;
-                        labels.Find(x => x.name == "COURSEDESCRIPTION").text = dxClassforCourse.course.description;
+                        labels.Find(x => x.name == "COURSEDESCRIPTION").tooltip = dxClassforCourse.course.description;
+                        string checkLength = dxClassforCourse.course.description.Substring(0, Math.Min(35, dxClassforCourse.course.description.Length));
+                        if (checkLength.Length == 35)
+                            checkLength += "...";
+                        labels.Find(x => x.name == "COURSEDESCRIPTION").text = checkLength;
                         textFields.Find(x => x.name == "COURSEID").value = dxClassforCourse.course.courseId;
                         EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClassforCourse, PopulateLessonList), this);
                     }
@@ -306,8 +310,8 @@ public class MOTARSetupWindow : EditorWindow
             foreach (var x in response.docs)
             {
                 DXLesson dxLesson = x;
-
-                DropDownLessonList.Add(x.name);
+                if(x.isAssessment)
+                    DropDownLessonList.Add(x.name);
             }
             //< !--< ui:Label name = "CLASSNAME" style = "position: absolute; top: 75px; left: 811px;" /> !-->
             if (DropDownLessonList.Count > 0)
@@ -334,34 +338,43 @@ public class MOTARSetupWindow : EditorWindow
                 var LessonID = textFields.Find(x => x.name == "LESSONID");
 
 
-                LessonDescription.value = response.docs[0].description;
-                LessonID.value = response.docs[0].lessonId;
-                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperQuestionsFromLessonFromSandboxUser(response.docs[0],(myQuestions)=> {
 
-                    /* [SerializeField]
-        public DXClass dxClass;
+                foreach (DXLesson dxl in response.docs)
+                    if (dxl.isAssessment)
+                    {
 
-        [SerializeField]
-        public DXLesson dxLesson;
-        [SerializeField]
-        public List<DXAssessmentQuestion> dxQuestionsList;*/
-
-                    
-                  
-                    thisAppsTest.dxLesson = response.docs[0];
-                    thisAppsTest.dxQuestionsList = myQuestions;
-                    PopulateQuestionsListFromSandboxUser(myQuestions);
-                
-                }), this);
-                //var warningLabel = labels.Find(x => x.name == "WarningLAbel");
-                //if (DXCommunicationLayerEditor.thisAppClasses.docs[0].course != null)
-                //{
-                //    warningLabel.visible = false;
-                //}
-
-                //DXCourse dxCourse = DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course == DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course.courseId == response.docs[0].courseId).course).course;
+                        LessonDescription.value = dxl.description;
+                        LessonID.value = dxl.lessonId;
 
 
+                        EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperQuestionsFromLessonFromSandboxUser(dxl, (myQuestions) =>
+                        {
+
+                            /* [SerializeField]
+                public DXClass dxClass;
+
+                [SerializeField]
+                public DXLesson dxLesson;
+                [SerializeField]
+                public List<DXAssessmentQuestion> dxQuestionsList;*/
+
+
+
+
+
+                            PopulateQuestionsListFromSandboxUser(myQuestions);
+
+                        }), this);
+                        //var warningLabel = labels.Find(x => x.name == "WarningLAbel");
+                        //if (DXCommunicationLayerEditor.thisAppClasses.docs[0].course != null)
+                        //{
+                        //    warningLabel.visible = false;
+                        //}
+
+                        //DXCourse dxCourse = DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course == DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course.courseId == response.docs[0].courseId).course).course;
+
+                        break;
+                    }
             }
         }
     }

@@ -1,6 +1,6 @@
 {
   "name": "com.dynepic.dxsdk",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "displayName": "Dynepic MOTAR SDK",
   "description": "Dynepic's SDK to access MOTAR from Unity",
   "unity": "2020.1",
