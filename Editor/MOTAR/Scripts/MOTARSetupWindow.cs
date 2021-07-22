@@ -278,6 +278,10 @@ public class MOTARSetupWindow : EditorWindow
             thisAppsTest.dxClass = dxClass;
             labels.Find(x => x.name == "COURSENAME").text = dxClass.course.name;
             labels.Find(x => x.name == "COURSEDESCRIPTION").text = dxClass.course.description;
+            string checkLength = dxClass.course.description.Substring(0, Math.Min(35, dxClass.course.description.Length));
+            if (checkLength.Length == 35)
+                checkLength += "...";
+            labels.Find(x => x.name == "COURSEDESCRIPTION").text = checkLength;
             textFields.Find(x => x.name == "COURSEID").value = dxClass.course.courseId;
             EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
         }
@@ -305,14 +309,20 @@ public class MOTARSetupWindow : EditorWindow
     {
         List<string> DropDownLessonList = new List<string>();
 
+        DropDownLessonList.Clear();
+
         if (response != null && response.docs != null && response.docs.Count > 0)
         {
             foreach (var x in response.docs)
             {
                 DXLesson dxLesson = x;
-                if(x.isAssessment)
+                if (x.isAssessment)
+                {
                     DropDownLessonList.Add(x.name);
+                }
             }
+
+
             //< !--< ui:Label name = "CLASSNAME" style = "position: absolute; top: 75px; left: 811px;" /> !-->
             if (DropDownLessonList.Count > 0)
             {
@@ -345,7 +355,7 @@ public class MOTARSetupWindow : EditorWindow
 
                         LessonDescription.value = dxl.description;
                         LessonID.value = dxl.lessonId;
-
+                        thisAppsTest.dxLesson = dxl;
 
                         EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperQuestionsFromLessonFromSandboxUser(dxl, (myQuestions) =>
                         {
@@ -365,6 +375,7 @@ public class MOTARSetupWindow : EditorWindow
                             PopulateQuestionsListFromSandboxUser(myQuestions);
 
                         }), this);
+                       
                         //var warningLabel = labels.Find(x => x.name == "WarningLAbel");
                         //if (DXCommunicationLayerEditor.thisAppClasses.docs[0].course != null)
                         //{
@@ -572,6 +583,10 @@ public class MOTARSetupWindow : EditorWindow
                 
                 break;
 
+            case "RESET":
+                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperClearImpersonatedStudentClassData(userId), this);
+                break;
+
             case "GENERATE":
                 //DXAppLessonData appData = DXCommunicationLayerEditor.thisApp;
                 dxConfiguration.clientID = clientID.value;
@@ -579,8 +594,36 @@ public class MOTARSetupWindow : EditorWindow
                 dxConfiguration.environment = DXEnvironment.Sandbox;
                 dxConfiguration.Name = root.Query<DropdownField>("APPNAMES").ToList()[0].value;
                 dxConfiguration.Description = root.Query<Label>("APPDESCRIPTION").ToList()[0].text;
-                AssetDatabase.CreateAsset(dxConfiguration, "Packages/com.dynepic.dxsdk/Editor/Motar/Resources/DX Configuration.asset");
-                AssetDatabase.CreateAsset(thisAppsTest, "Packages/com.dynepic.dxsdk/Editor/Motar/Resources/DXAppData.asset");
+                //AssetDatabase.CreateAsset(dxConfiguration, "Packages/com.dynepic.dxsdk/Editor/Motar/Resources/DX Configuration.asset");
+                if (!AssetDatabase.IsValidFolder("Assets/MOTAR"))
+                    AssetDatabase.CreateFolder("Assets","MOTAR");
+                if (!AssetDatabase.IsValidFolder("Assets/MOTAR/Resources"))
+                    AssetDatabase.CreateFolder("Assets/MOTAR", "Resources");
+                
+                try
+                {
+                    AssetDatabase.DeleteAsset("Assets/MOTAR/Resources/DX Configuration.asset");
+                    
+                }
+                catch
+                {
+                    Debug.Log("assets did not exist...");
+                }
+
+                try
+                {
+                    AssetDatabase.DeleteAsset("Assets/MOTAR/Resources/DXAppData.asset");
+
+                }
+                catch
+                {
+                    Debug.Log("assets did not exist...");
+                }
+               
+
+                AssetDatabase.CreateAsset(dxConfiguration, "Assets/MOTAR/Resources/DX Configuration.asset");
+               
+                AssetDatabase.CreateAsset(thisAppsTest, "Assets/MOTAR/Resources/DXAppData.asset");
 
                 EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperClearImpersonatedStudentClassData(userId),this);
                 break;
@@ -731,7 +774,7 @@ public class MOTARSetupWindow : EditorWindow
         listView.onSelectionChange += objects => Debug.Log(objects);
 
         listView.style.flexGrow = 1.0f;
-
+        thisAppsTest.dxQuestionsList = dxQuestionsList;
         //listView.Refresh();
     }
 

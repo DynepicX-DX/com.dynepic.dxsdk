@@ -279,8 +279,12 @@ public class MOTARLogonWindow : EditorWindow
 
             case "GENERATE":
                 DXAppLessonData appData = DXCommunicationLayerEditor.thisApp;
-                
-                AssetDatabase.CreateAsset(appData, "Packages/com.dynepic.dxsdk/Editor/Motar/Resources/DXAppData.asset");
+                if (!AssetDatabase.IsValidFolder("Assets/MOTAR"))
+                    AssetDatabase.CreateFolder("Assets", "MOTAR");
+                if (!AssetDatabase.IsValidFolder("Assets/MOTAR/Resources"))
+                    AssetDatabase.CreateFolder("Assets/MOTAR", "Resources");
+
+                AssetDatabase.CreateAsset(appData, "Assets/MOTAR/Resources/DXAppData.asset");
                 break;
                 
         }

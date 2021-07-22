@@ -142,7 +142,11 @@ public class MOTARPrefabsWindow : EditorWindow
                 dps.StartModuleButton = objectFields.Find(x => x.name == "STARTMODULE_PREFAB").value;
                 dps.QuestionsCanvas = objectFields.Find(x => x.name == "QUESTIONS_PREFAB").value;
                 dps.TestResultsCanvas = objectFields.Find(x => x.name == "TESTRESULTS_PREFAB").value;
-                AssetDatabase.CreateAsset(dps, "Packages/com.dynepic.dxsdk/Editor/Motar/Resources/DXPrefabSettings.asset");
+                if (!AssetDatabase.IsValidFolder("Assets/MOTAR"))
+                    AssetDatabase.CreateFolder("Assets", "MOTAR");
+                if (!AssetDatabase.IsValidFolder("Assets/MOTAR/Resources"))
+                    AssetDatabase.CreateFolder("Assets/MOTAR", "Resources");
+                AssetDatabase.CreateAsset(dps, "Assets/MOTAR/Resources/DXPrefabSettings.asset");
                 break;
 
             case "GENERATEPREFABS":

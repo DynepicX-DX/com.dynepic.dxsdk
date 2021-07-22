@@ -42,13 +42,14 @@
     <ui:Label name="COURSENAME" style="position: absolute; top: 260px; left: 116px;" />
     <ui:Label name="COURSEDESCRIPTION" style="position: absolute; top: 285px; left: 116px;" />
     <ui:TextField name="COURSEID" style="position: absolute; top: 310px; left: 116px; width: 200;" />
-    <ui:Box name="LESSONINFOBOX" style="position: absolute; top: 220px; left: 350px; width: 330; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
-    <ui:Label text="Lesson Info" display-tooltip-when-elided="true" style="position: absolute; top: 230px; left: 355px;" />
-    <ui:Label text="Name:" display-tooltip-when-elided="true" style="position: absolute; top: 260px; left: 361px;" />
-    <ui:Label text="Description:" display-tooltip-when-elided="true" style="position: absolute; top: 285px; left: 361px;" />
-    <ui:Label text="LessonID:" display-tooltip-when-elided="true" style="position: absolute; top: 310px; left: 361px;" />
-    <ui:TextField name="LESSONDESCRIPTION" style="position: absolute; width: 200; top: 285px; left: 456px;" />
-    <ui:TextField name="LESSONID" style="position: absolute; top: 310px; left: 456px; width: 200;" />
+    <ui:Box name="LESSONINFOBOX" style="position: absolute; top: 220px; left: 350px; width: 330; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label text="Lesson Info" display-tooltip-when-elided="true" name="LessonInfoLabel" style="position: relative; top: 10px; left: 5px;" />
+        <ui:Label text="Name:" display-tooltip-when-elided="true" name="LessonNameLabel" style="position: relative; top: 30px; left: 10px;" />
+        <ui:Label text="Description:" display-tooltip-when-elided="true" name="LessonDescriptionLabel" style="position: relative; top: 40px; left: 10px;" />
+        <ui:Label text="LessonID:" display-tooltip-when-elided="true" name="LessonIDLabel" style="position: relative; top: 70px; left: 10px;" />
+        <ui:TextField name="LESSONDESCRIPTION" style="position: relative; width: 200; top: 10px; left: 100px;" />
+        <ui:TextField name="LESSONID" style="position: relative; top: 30px; left: 100px; width: 200;" />
+    </ui:Box>
     <ui:Box style="position: absolute; top: 220px; left: 695px; width: 330; height: 30; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0);">
         <ui:Label text="Questions" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 5px;" />
     </ui:Box>
