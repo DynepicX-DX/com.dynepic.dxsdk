@@ -56,5 +56,6 @@
     <ui:Box name="BoxDescription" style="position: absolute; top: 250px; left: 695px; width: 329; height: 130; border-left-color: rgb(5, 5, 5); border-right-color: rgb(7, 7, 7); border-bottom-color: rgb(0, 0, 0);">
         <ui:ListView name="QUESTIONS" focusable="true" />
     </ui:Box>
-    <ui:Button name="GENERATE" text=" Save Settings " display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 400px; left: 450px;" />
+    <ui:Button name="GENERATE" text=" Save Settings " display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 392px; left: 302px;" />
+    <ui:Button name="RESET" text="Reset Assesment Data" display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 392px; left: 619px;" />
 </ui:UXML>
