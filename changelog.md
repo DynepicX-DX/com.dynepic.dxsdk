@@ -9,3 +9,6 @@ Fix for organization list issues
 Fix for non-assesment records showing in Setup
 Added reset ability for selected assesments
 Fix occasional issue with saving Assesment questions locally
+[0.3.4] - 2021-08-27
+SSO (and soon CAC) Login
+
