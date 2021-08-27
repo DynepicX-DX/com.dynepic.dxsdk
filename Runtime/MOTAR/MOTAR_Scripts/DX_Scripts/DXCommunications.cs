@@ -154,7 +154,10 @@ namespace DXCommunications
             MOTARStateMachineHandler.instance.StartCoroutine(coDXLoginRequest(handle, password, completion));
         }
 
-
+        public static void DXSSOLoginRequest(string accessToken,string refreshToken,Action<DXProfile> completion)
+        {
+            MOTARStateMachineHandler.instance.StartCoroutine(coDXSSOLoginRequest(accessToken,refreshToken,completion));
+        }
 
         public static IEnumerator DXRefreshToken()
         {
@@ -450,7 +453,14 @@ namespace DXCommunications
                 }
             }
         }
-
+        public static IEnumerator coDXSSOLoginRequest(string accessToken, string refreshToken, Action<DXProfile> completion)
+        {
+                   
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
+            yield return DXProfileRquest(completion);
+           
+        }
         public static void AddXApiStatement(string verb,string studentID,string sObjectBody)
         {
             // Don't forget to use the DXCommunications namespace

@@ -59,7 +59,11 @@ public class MOTARSetupWindow : EditorWindow
 
 
     }
-    
+    private void OnSelectionChange()
+    {
+        // Debug.LogWarning(Selection.activeObject.name);
+        ChannelCommunicationDocExample.OutputSelection();
+    }
     private void OnEnable()
     {
         instance = this;
