@@ -74,6 +74,7 @@ public class MOTARLoginStateButtonHandler : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log(e.Message);
+            PersistentDataManager.Instance.Clear("userprofile");
         }
         
         ShowLoginPrompt.SetActive(false);

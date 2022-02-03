@@ -132,6 +132,7 @@ namespace DXCommunications
             public string end;
         }
     }
+    
 
     [Serializable]
     public class DXProfile
@@ -146,6 +147,12 @@ namespace DXCommunications
         public string coverPhoto;
         public string country;
         public bool anonymous;
+        public string position;
+        public string role;
+       // public Dictionary<string,string> organizationRoles;
+        public string email;
+        public bool trainer;
+        public bool trainee;
 
         public enum UserType
         {

@@ -28,22 +28,13 @@ namespace DXCommunications
         public static extern IntPtr SetForegroundWindow(IntPtr hWnd);
         public static async void StartServer(string[] args)
         {
-            //wssv = new WebSocketServer("ws://127.0.0.1");
-            ////wssv.SslConfiguration.ServerCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2();
-            //wssv.AddWebSocketService<MOTARWSS>("/MOTAR");
-            //wssv.Start();
-            //hssv = new HttpServer("http://localhost");
-            //hssv.SslConfiguration.ServerCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2();
-            //hssv.AddWebSocketService<MOTARWSS>("/MOTAR");
-            //hssv.Start();
+          
             string[] prefixes = new string[] { "http://127.0.0.1/MOTAR/", "https://127.0.0.1/MOTAR/" };
 
             var result = Task.Run(async() => {
                 hwnd = GetForegroundWindow();
                 SimpleListenerExample(prefixes);
-                //await Task.Delay(2000);
-
-                //SetForegroundWindow(p);
+                
 
                 });
 
@@ -58,15 +49,14 @@ namespace DXCommunications
         public static void SimpleListenerExample(string[] prefixes)
         {
             isAuthenticated = false;
-            var p = Process.GetCurrentProcess();
-            
+           
             if (!HttpListener.IsSupported)
             {
                 //Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
                 return;
             }
             // URI prefixes are required,
-            // for example "http://contoso.com:8080/index/".
+           
             if (prefixes == null || prefixes.Length == 0)
                 throw new ArgumentException("prefixes");
 

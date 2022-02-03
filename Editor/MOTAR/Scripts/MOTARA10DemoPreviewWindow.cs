@@ -51,7 +51,7 @@ public class MOTARA10DemoPreviewWindow : EditorWindow
         {
             MOTARModelDetailWindow.PreviewModel = false;
             myWindow.Close();
-            Destroy(myWindow);
+            DestroyImmediate(myWindow);
             myWindow = null;
             
         }
