@@ -739,7 +739,7 @@ namespace DXCommunications
 
                         //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
                         companyList = JsonConvert.DeserializeObject<List<DXDeveloperCompany>>(json);
-                        DXDeveloperCompany dxCompany = companyList[3];
+                        DXDeveloperCompany dxCompany = companyList[0];
                         DXDeveloperCompany demoDxCompany = null; // companyList.Find(x => x.name == "Boeing");
                         if(dxCompany.name.ToLower() == "dynepic")
                             demoDxCompany = companyList.Find(x => x.name == "AwesomeVR");
