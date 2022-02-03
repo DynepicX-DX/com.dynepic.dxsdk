@@ -180,7 +180,7 @@ public class MOTARLogonWindow : EditorWindow
         }
     }
 
-    private void SetupDropdownField(DropdownField obj)
+    private void SetupDropdownField(UnityEngine.UIElements.DropdownField obj)
     {
         if (dxConfiguration == null)
             dxConfiguration = ScriptableObject.CreateInstance<DXConfiguration>();
