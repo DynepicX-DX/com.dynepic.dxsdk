@@ -59,7 +59,8 @@ public static class ChannelCommunicationDocExample
         // Client expects string data. Encode the data and send it back as a string:
 
        
-        ChannelService.Send(savedID, Selection.activeObject.name);
+        if(Selection.activeObject != null)
+            ChannelService.Send(savedID, Selection.activeObject.name);
     }
     static void HandleChannelStringMessage(int connectionId, byte[] data)
     {
