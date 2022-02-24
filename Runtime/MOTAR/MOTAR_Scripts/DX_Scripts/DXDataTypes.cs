@@ -22,6 +22,13 @@ namespace DXCommunications
 {
 
     [Serializable]
+    public class DXDeveloperCompany
+    {
+        public string id;
+        public string name;
+        public string description;
+    }
+    [Serializable]
     public class DXAssessmentQuestion
     {
         public List<string> answers;

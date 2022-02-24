@@ -58,4 +58,6 @@
     </ui:Box>
     <ui:Button name="GENERATE" text=" Save Settings " display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 392px; left: 302px;" />
     <ui:Button name="RESET" text="Reset Assesment Data" display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 392px; left: 619px;" />
+    <ui:Label text="Filter:" display-tooltip-when-elided="true" name="CourseInfoFilterLabel" style="position: absolute; top: 232px; left: 114px;" />
+    <ui:TextField name="COURSENAMEFILTER" style="position: absolute; top: 230px; left: 158px; width: 151px;" />
 </ui:UXML>

@@ -226,15 +226,18 @@ public class MOTARSetupWindow : EditorWindow
 
                     var GroupID = textFields.Find(x => x.name == "GROUPID");
                     var JoinCode = textFields.Find(x => x.name == "JOINCODE");
-
+                    var coursefilter = root.Query<TextField>().ToList().Find(x => x.name == "COURSENAMEFILTER");
 
                     GroupID.value = DXCommunicationLayerEditor.thisAppClasses.docs[0].groupId;
                     JoinCode.value = DXCommunicationLayerEditor.thisAppClasses.docs[0].joinCode;
 
                     var warningLabel = labels.Find(x => x.name == "WarningLabel");
-                    if (DXCommunicationLayerEditor.thisAppClasses.docs[0].course != null)
+                    if (DXCommunicationLayerEditor.thisAppClasses.docs != null && DXCommunicationLayerEditor.thisAppClasses.docs.Count > 0)
+                    
                     {
-                        DXClass dxClassforCourse = DXCommunicationLayerEditor.thisAppClasses.docs[0];
+                        
+                        string courseFilter = coursefilter.text;
+                        DXClass dxClassforCourse = DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course.name == courseFilter);
                         thisAppsTest.dxClass = dxClassforCourse;
                         warningLabel.visible = false;
                         labels.Find(x => x.name == "COURSENAME").text = dxClassforCourse.course.name;
@@ -623,10 +626,15 @@ public class MOTARSetupWindow : EditorWindow
                 {
                     Debug.Log("assets did not exist...");
                 }
-               
 
-                AssetDatabase.CreateAsset(dxConfiguration, "Assets/MOTAR/Resources/DX Configuration.asset");
-               
+                try
+                {
+                    AssetDatabase.CreateAsset(dxConfiguration, "Assets/MOTAR/Resources/DX Configuration.asset");
+                }
+                catch(Exception e)
+                {
+                    Debug.LogError("Can't create asset..."+e.Message);
+                }
                 AssetDatabase.CreateAsset(thisAppsTest, "Assets/MOTAR/Resources/DXAppData.asset");
 
                 EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperClearImpersonatedStudentClassData(userId),this);

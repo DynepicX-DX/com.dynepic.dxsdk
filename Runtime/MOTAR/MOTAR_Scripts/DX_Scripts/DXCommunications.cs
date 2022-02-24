@@ -706,7 +706,7 @@ namespace DXCommunications
             string url = DXUrl.endpoint(api);
             if(queryParameters != null)
             {
-                url += QueryString(queryParameters);
+                url += "?"+QueryString(queryParameters);
             }
             string bodyJson = "";
             UnityWebRequest webRequest = null;

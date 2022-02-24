@@ -36,12 +36,7 @@ namespace DXCommunications
 
     {
        
-        private class DXDeveloperCompany
-        {
-            public string id;
-            public string name;
-            public string description;
-        }
+        
         private static List<DXDeveloperCompany> companyList = new List<DXDeveloperCompany>();
         public static JArray appList = new JArray();
         public static JArray endUserList = new JArray();
@@ -57,7 +52,7 @@ namespace DXCommunications
 
         //bCorrect, questions[questionIndex].question, questions[questionIndex].correctAnswerIndex, attemptedClassId, attemptedLessonId
 
-        public static IEnumerator MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(string handle, string password, Action<bool> completion,
+        public static IEnumerator MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(string handle, string password, string orgFilter,Action<bool> completion,
                 int? page = null,
                 int? limit = null)
         {
@@ -114,7 +109,7 @@ namespace DXCommunications
                         headers.TryGetValue("refreshtoken", out string refreshToken);
                         DevAccessToken = accessToken;
                         DevRefreshToken = refreshToken;
-                        yield return MOTARDeveloperEnumerateCompanies();
+                        yield return MOTARDeveloperEnumerateCompanies(orgFilter);
                         if (completion != null)
                             completion(true);
                         break;
@@ -701,7 +696,7 @@ namespace DXCommunications
 
             }
         }
-        public static IEnumerator MOTARDeveloperEnumerateCompanies()
+        public static IEnumerator MOTARDeveloperEnumerateCompanies(string orgFilter)
         {
 
             //string url = "https://api.motar.io/sdk/v1/company/list";
@@ -739,14 +734,18 @@ namespace DXCommunications
 
                         //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
                         companyList = JsonConvert.DeserializeObject<List<DXDeveloperCompany>>(json);
-                        DXDeveloperCompany dxCompany = companyList[0];
-                        DXDeveloperCompany demoDxCompany = null; // companyList.Find(x => x.name == "Boeing");
-                        if(dxCompany.name.ToLower() == "dynepic")
-                            demoDxCompany = companyList.Find(x => x.name == "AwesomeVR");
-                        if (demoDxCompany != null)
-                            dxCompany = demoDxCompany;
-                        yield return MOTARDeveloperEnumerateCompanyApps(dxCompany);
-                        yield return MOTARDeveloperEnumerateCompanySandboxUsers(dxCompany);
+                        if(companyList != null && companyList.Count > 0)
+                        {
+                            DXDeveloperCompany dxCompany = companyList[0];
+                            DXDeveloperCompany demoDxCompany = null; // companyList.Find(x => x.name == "Boeing");
+                            if(orgFilter != "" && orgFilter != null)
+                                demoDxCompany = companyList.Find(x => x.name == orgFilter);
+                            if (demoDxCompany != null)
+                                dxCompany = demoDxCompany;
+                            yield return MOTARDeveloperEnumerateCompanyApps(dxCompany);
+                            yield return MOTARDeveloperEnumerateCompanySandboxUsers(dxCompany);
+                        }
+                        
                         break;
 
                     default:

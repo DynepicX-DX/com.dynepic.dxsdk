@@ -267,9 +267,10 @@ public class MOTARLogonWindow : EditorWindow
                 
                 string handle = textFields.Find(x => x.name== "USERID" ).text;
                 string password = textFields.Find(x => x.name == "PASSWORD").text;
+                string orgFilter = textFields.Find(x => x.name == "ORGFILTER").text;
                 //DXTrainingLogin.AuthenticateMotarTrainingUser(handle,password);
                 //EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperAuthenticationAndSetupFromTestUser(handle, password,MOTARAuthenticationCompletion),this);
-                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(handle, password, MOTARDevAuthenticationCompletion), this);
+                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(handle, password, orgFilter, MOTARDevAuthenticationCompletion), this);
 
                 break;
 
@@ -291,6 +292,12 @@ public class MOTARLogonWindow : EditorWindow
         }
         //go.transform.position = Vector3.zero;
     }
+
+    private void HandleOrgs(List<DXDeveloperCompany> obj)
+    {
+        throw new NotImplementedException();
+    }
+
     private void MOTARDevAuthenticationCompletion(bool bSuccess)
     {
         if(bSuccess)
