@@ -52,10 +52,10 @@ public class MOTARLogonWindow : EditorWindow
         AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
         AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
 
+
         instance = this;
         if (myWindow == null)
             myWindow = GetWindow<MOTARLogonWindow>();
-      
         
         //if (DXConfiguration == null)
         //    DXConfiguration = Resources.Load("DX Configuration") as DXConfiguration;
@@ -79,11 +79,11 @@ public class MOTARLogonWindow : EditorWindow
         
         var image = root.Query<Image>().ToList().Find(x => x.name == "MOTARLOGO");
         image.image = Resources.Load<Texture2D>("MOTAR_SDK_LOGO");
-
         
 
         myWindow.maxSize = new Vector2((512+256), myWindow.position.height);
         myWindow.minSize = maxSize;
+
         image.style.left = 50;
 
         var LogonBox = root.Query<Box>().ToList().Find(x => x.name == "LOGONBOX");
@@ -267,10 +267,9 @@ public class MOTARLogonWindow : EditorWindow
                 
                 string handle = textFields.Find(x => x.name== "USERID" ).text;
                 string password = textFields.Find(x => x.name == "PASSWORD").text;
-                string orgFilter = textFields.Find(x => x.name == "ORGFILTER").text;
                 //DXTrainingLogin.AuthenticateMotarTrainingUser(handle,password);
                 //EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperAuthenticationAndSetupFromTestUser(handle, password,MOTARAuthenticationCompletion),this);
-                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(handle, password, orgFilter, MOTARDevAuthenticationCompletion), this);
+                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(handle, password, HandleOrgs), this);
 
                 break;
 
@@ -293,9 +292,25 @@ public class MOTARLogonWindow : EditorWindow
         //go.transform.position = Vector3.zero;
     }
 
-    private void HandleOrgs(List<DXDeveloperCompany> obj)
+    private void HandleOrgs(bool bSuccess)
     {
-        throw new NotImplementedException();
+        if (bSuccess)
+        {
+            List<DXDeveloperCompany> cl = DXCommunicationLayerEditor.GetDXDeveloperCompanies();
+            if (cl.Count == 0)
+            {
+                Debug.LogError("You do not belong to any studio groups. Functionality will be limited.");
+                MOTARDevAuthenticationCompletion(bSuccess);
+            } else if (cl.Count == 1)
+            {
+                EditorCoroutineUtility.StartCoroutine(
+                    MOTAROrgWindow.CompleteSubmission(DXCommunicationLayerEditor.GetDXDeveloperCompanies()[0]), this);
+            }
+            else 
+                MOTARSdk.ShowOrginizationWindow();
+                
+            myWindow.Close();
+        }
     }
 
     private void MOTARDevAuthenticationCompletion(bool bSuccess)
@@ -304,7 +319,6 @@ public class MOTARLogonWindow : EditorWindow
         {
             MOTARSdk.ShowAuthenticatedWindows();
             myWindow.Close();
-            
         }
     }
     

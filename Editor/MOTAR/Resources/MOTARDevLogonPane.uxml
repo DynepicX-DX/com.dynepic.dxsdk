@@ -8,7 +8,5 @@
         <ui:TextField name="PASSWORD" password="true" mask-character="*" style="position: absolute; width: 150px; top: 65px; left: 116px;" />
         <ui:Button name="MOTARLOGIN" text=" Login " display-tooltip-when-elided="true" style="height: 19px; width: 87px; position: absolute; top: 100px; left: 116px;" />
         <ui:Label text="MOTAR Studio Login&#10;" display-tooltip-when-elided="true" style="left: 5px; top: 5px;" />
-        <ui:TextField name="ORGFILTER" style="position: absolute; width: 88px; top: 132px; left: 4px;" />
-        <ui:Label text="Org Filter" display-tooltip-when-elided="true" style="position: absolute; top: 111px; left: 11px;" />
     </ui:Box>
 </ui:UXML>

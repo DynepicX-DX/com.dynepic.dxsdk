@@ -189,75 +189,50 @@ public class MOTARSetupWindow : EditorWindow
             }
         }
     }
-    public void PopulateClassList(bool bSuccess)
+    public void PopulateClassList(DXCourse dxCourse)
     {
-        if (bSuccess)
-        {
-            List<string> DropDownClassChoices = new List<string>();
+        List<string> DropDownClassChoices = new List<string>();
 
-            if (DXCommunicationLayerEditor.thisAppClasses != null && DXCommunicationLayerEditor.thisAppClasses.docs != null && DXCommunicationLayerEditor.thisAppClasses.docs.Count > 0)
+        if (dxCourse.classes != null && dxCourse.classes.Count > 0)
+        {
+            foreach (var x in dxCourse.classes)
             {
-                foreach (var x in DXCommunicationLayerEditor.thisAppClasses.docs)
-                {
-                    DXClass dxClass = x;
+                DXClass dxClass = x;
 
-                    DropDownClassChoices.Add(x.name);
-                }
-                //< !--< ui:Label name = "CLASSNAME" style = "position: absolute; top: 75px; left: 811px;" /> !-->
-                if (DropDownClassChoices.Count > 0)
-                {
-                    var myBox = root.Query<Box>().ToList().Find(x => x.name == "CLASSINFOBOX");
-                    var xy = root.Query<DropdownField>().ToList().Find(z => z.name == "CLASSNAMES");
-                    if (xy != null)
-                        myBox.Remove(xy);
-                    DropdownField dtf = new DropdownField(DropDownClassChoices, 0);
-                    myBox.Add(dtf);
-                    // dtf.BindProperty()
-                    dtf.name = "CLASSNAMES";
-                    dtf.style.position = Position.Absolute;
-                    dtf.style.top = 38;
-                    dtf.style.width = 200;
-                    dtf.style.left = 116;
-
-                    dtf.RegisterCallback<ChangeEvent<string>>(ClassSelectionDropDownListener);
-
-                    var labels = root.Query<Label>().ToList();
-                    var textFields = root.Query<TextField>().ToList();
-
-                    var GroupID = textFields.Find(x => x.name == "GROUPID");
-                    var JoinCode = textFields.Find(x => x.name == "JOINCODE");
-                    var coursefilter = root.Query<TextField>().ToList().Find(x => x.name == "COURSENAMEFILTER");
-
-                    GroupID.value = DXCommunicationLayerEditor.thisAppClasses.docs[0].groupId;
-                    JoinCode.value = DXCommunicationLayerEditor.thisAppClasses.docs[0].joinCode;
-
-                    var warningLabel = labels.Find(x => x.name == "WarningLabel");
-                    if (DXCommunicationLayerEditor.thisAppClasses.docs != null && DXCommunicationLayerEditor.thisAppClasses.docs.Count > 0)
-                    
-                    {
-                        
-                        string courseFilter = coursefilter.text;
-                        DXClass dxClassforCourse = DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course.name == courseFilter);
-                        thisAppsTest.dxClass = dxClassforCourse;
-                        warningLabel.visible = false;
-                        labels.Find(x => x.name == "COURSENAME").text = dxClassforCourse.course.name;
-                        labels.Find(x => x.name == "COURSEDESCRIPTION").tooltip = dxClassforCourse.course.description;
-                        string checkLength = dxClassforCourse.course.description.Substring(0, Math.Min(35, dxClassforCourse.course.description.Length));
-                        if (checkLength.Length == 35)
-                            checkLength += "...";
-                        labels.Find(x => x.name == "COURSEDESCRIPTION").text = checkLength;
-                        textFields.Find(x => x.name == "COURSEID").value = dxClassforCourse.course.courseId;
-                        EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClassforCourse, PopulateLessonList), this);
-                    }
-
-
-                }
+                DropDownClassChoices.Add(x.name);
             }
-        }
-        else
-        {
-            // try to refresh token
+            //< !--< ui:Label name = "CLASSNAME" style = "position: absolute; top: 75px; left: 811px;" /> !-->
+            if (DropDownClassChoices.Count > 0)
+            {
+                var myBox = root.Query<Box>().ToList().Find(x => x.name == "CLASSINFOBOX");
+                var xy = root.Query<DropdownField>().ToList().Find(z => z.name == "CLASSNAMES");
+                if (xy != null)
+                    myBox.Remove(xy);
+                DropdownField dtf = new DropdownField(DropDownClassChoices, 0);
+                myBox.Add(dtf);
+                // dtf.BindProperty()
+                dtf.name = "CLASSNAMES";
+                dtf.style.position = Position.Absolute;
+                dtf.style.top = 38;
+                dtf.style.width = 200;
+                dtf.style.left = 116;
 
+                dtf.RegisterCallback<ChangeEvent<string>>(ClassSelectionDropDownListener);
+
+                var labels = root.Query<Label>().ToList();
+                var textFields = root.Query<TextField>().ToList();
+
+                var GroupID = textFields.Find(x => x.name == "GROUPID");
+                var JoinCode = textFields.Find(x => x.name == "JOINCODE");
+
+                DXClass dxClass = dxCourse.classes[0];
+                GroupID.value = dxClass.groupId;
+                JoinCode.value = dxClass.joinCode;
+
+                var warningLabel = labels.Find(x => x.name == "WarningLabel");
+
+                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
+            }
         }
     }
 
@@ -271,32 +246,99 @@ public class MOTARSetupWindow : EditorWindow
         var GroupID = textFields.Find(x => x.name == "GROUPID");
         var JoinCode = textFields.Find(x => x.name == "JOINCODE");
 
-        labels.Find(x => x.name == "COURSENAME").text = "";
-        labels.Find(x => x.name == "COURSEDESCRIPTION").text = "";
-        textFields.Find(x => x.name == "COURSEID").value = "";
-
         GroupID.value = dxClass.groupId;
         JoinCode.value = dxClass.joinCode;
 
         var warningLabel = labels.Find(x => x.name == "WarningLabel");
         warningLabel.visible = dxClass.course == null;
-        if(dxClass.course != null)
-        {
-            thisAppsTest.dxClass = dxClass;
-            labels.Find(x => x.name == "COURSENAME").text = dxClass.course.name;
-            labels.Find(x => x.name == "COURSEDESCRIPTION").text = dxClass.course.description;
-            string checkLength = dxClass.course.description.Substring(0, Math.Min(35, dxClass.course.description.Length));
-            if (checkLength.Length == 35)
-                checkLength += "...";
-            labels.Find(x => x.name == "COURSEDESCRIPTION").text = checkLength;
-            textFields.Find(x => x.name == "COURSEID").value = dxClass.course.courseId;
-            EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
-        }
+
+        EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
         
     }
+
+    public void PopulateCourseList(bool bSuccess)
+    {
+        if (bSuccess)
+        {
+            List<string> DropDownCourseChoices = new List<string>();
+
+            if (DXCommunicationLayerEditor.thisAppCourses != null && DXCommunicationLayerEditor.thisAppCourses.Count > 0)
+            {
+                foreach (var x in DXCommunicationLayerEditor.thisAppCourses)
+                {
+                    DXCourse dxCourse = x;
+
+                    DropDownCourseChoices.Add(x.name);
+                }
+                //< !--< ui:Label name = "CLASSNAME" style = "position: absolute; top: 75px; left: 811px;" /> !-->
+                if (DropDownCourseChoices.Count > 0)
+                {
+                    var myBox = root.Query<Box>().ToList().Find(x => x.name == "CourseInfoBox");
+                    var xy = root.Query<DropdownField>().ToList().Find(z => z.name == "COURSENAMES");
+                    if (xy != null)
+                        myBox.Remove(xy);
+                    DropdownField dtf = new DropdownField(DropDownCourseChoices, 0);
+                    myBox.Add(dtf);
+                    // dtf.BindProperty()
+                    dtf.name = "COURSENAMES";
+                    dtf.style.position = Position.Absolute;
+                    dtf.style.top = 36;
+                    dtf.style.width = 200;
+                    dtf.style.left = 116;
+
+                    dtf.RegisterCallback<ChangeEvent<string>>(CourseSelectionDropdownListener);
+
+                    var labels = root.Query<Label>().ToList();
+                    var textFields = root.Query<TextField>().ToList();
+
+                    DXCourse dxCourse = DXCommunicationLayerEditor.thisAppCourses[0];
+
+                    labels.Find(x => x.name == "COURSEDESCRIPTION").tooltip = dxCourse.description;
+                    string checkLength = dxCourse.description.Substring(0, Math.Min(35, dxCourse.description.Length));
+                    if (checkLength.Length == 35)
+                        checkLength += "...";
+                    labels.Find(x => x.name == "COURSEDESCRIPTION").text = checkLength;
+                    textFields.Find(x => x.name == "COURSEID").value = dxCourse.courseId;
+
+                    PopulateClassList(dxCourse);
+                }
+            }
+        } else
+        {
+            // try to refresh token
+
+        }
+    }
+
+    private void CourseSelectionDropdownListener(ChangeEvent<string> evt)
+    {
+        DXCourse dxCourse = DXCommunicationLayerEditor.thisAppCourses.Find(x => x.name == evt.newValue);
+
+        var labels = root.Query<Label>().ToList();
+        var textFields = root.Query<TextField>().ToList();
+
+        labels.Find(x => x.name == "COURSEDESCRIPTION").tooltip = dxCourse.description;
+        string checkLength = dxCourse.description.Substring(0, Math.Min(35, dxCourse.description.Length));
+        if (checkLength.Length == 35)
+            checkLength += "...";
+        labels.Find(x => x.name == "COURSEDESCRIPTION").text = checkLength;
+        textFields.Find(x => x.name == "COURSEID").value = dxCourse.courseId;
+
+        PopulateClassList(dxCourse);
+    }
+
     private void LessonSelectionDropdownListener(ChangeEvent<string> evt)
     {
         DXLesson dXLesson = DXCommunicationLayerEditor.thisAppLessons.docs.Find(x => x.name == evt.newValue);
+        if (dXLesson == null)
+            foreach(DXLesson lesson in DXCommunicationLayerEditor.thisAppLessons.docs)
+            {
+                foreach(DXLesson child in lesson.childLessons)
+                {
+                    if (child.name == evt.newValue) dXLesson = child;
+                }
+            }
+
 
         var labels = root.Query<Label>().ToList();
         var textFields = root.Query<TextField>().ToList();
@@ -304,12 +346,26 @@ public class MOTARSetupWindow : EditorWindow
         var LessonDescription = textFields.Find(x => x.name == "LESSONDESCRIPTION");
         var LessonID = textFields.Find(x => x.name == "LESSONID");
 
+        var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
+        listView.visible = false;
+        var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
+        events.visible = false;
 
-        LessonDescription.value = dXLesson.description;
+        LessonDescription.value = dXLesson.description != null ? dXLesson.description: "";
         LessonID.value = dXLesson.lessonId;
 
         thisAppsTest.dxLesson = dXLesson;
-
+        
+        if (dXLesson.isAssessment)
+        {
+            EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperQuestionsFromLessonFromSandboxUser(dXLesson, (myQuestions) =>
+            {
+                PopulateQuestionsListFromSandboxUser(myQuestions);
+            }), this);
+        } else
+        {
+            EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperEventSetFromLessonFromSandboxUser(dXLesson, PopulateEventSetFromSandboxUser), this);
+        }
     }
 
     public void PopulateLessonList(GetAllLessonsResponse response)
@@ -322,10 +378,11 @@ public class MOTARSetupWindow : EditorWindow
         {
             foreach (var x in response.docs)
             {
-                DXLesson dxLesson = x;
-                if (x.isAssessment)
+                DropDownLessonList.Add(x.name);
+
+                foreach (DXLesson child in x.childLessons)
                 {
-                    DropDownLessonList.Add(x.name);
+                    DropDownLessonList.Add(child.name);
                 }
             }
 
@@ -354,48 +411,90 @@ public class MOTARSetupWindow : EditorWindow
                 var LessonDescription = textFields.Find(x => x.name == "LESSONDESCRIPTION");
                 var LessonID = textFields.Find(x => x.name == "LESSONID");
 
+                var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
+                listView.visible = false;
+                var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
+                events.visible = false;
 
+                DXLesson dxl = DXCommunicationLayerEditor.thisAppLessons.docs[0];
 
-                foreach (DXLesson dxl in response.docs)
-                    if (dxl.isAssessment)
+                if (dxl.isAssessment)
+                {
+                    LessonDescription.value = dxl.description;
+                    LessonID.value = dxl.lessonId;
+                    thisAppsTest.dxLesson = dxl;
+
+                    EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperQuestionsFromLessonFromSandboxUser(dxl, (myQuestions) =>
                     {
-
-                        LessonDescription.value = dxl.description;
-                        LessonID.value = dxl.lessonId;
-                        thisAppsTest.dxLesson = dxl;
-
-                        EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperQuestionsFromLessonFromSandboxUser(dxl, (myQuestions) =>
-                        {
-
-                            /* [SerializeField]
-                public DXClass dxClass;
-
-                [SerializeField]
-                public DXLesson dxLesson;
-                [SerializeField]
-                public List<DXAssessmentQuestion> dxQuestionsList;*/
-
-
-
-
-
-                            PopulateQuestionsListFromSandboxUser(myQuestions);
-
-                        }), this);
-                       
-                        //var warningLabel = labels.Find(x => x.name == "WarningLAbel");
-                        //if (DXCommunicationLayerEditor.thisAppClasses.docs[0].course != null)
-                        //{
-                        //    warningLabel.visible = false;
-                        //}
-
-                        //DXCourse dxCourse = DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course == DXCommunicationLayerEditor.thisAppClasses.docs.Find(x => x.course.courseId == response.docs[0].courseId).course).course;
-
-                        break;
-                    }
+                        PopulateQuestionsListFromSandboxUser(myQuestions);
+                    }), this);
+                } else
+                {
+                    LessonDescription.value = dxl.description;
+                    LessonID.value = dxl.lessonId;
+                    thisAppsTest.dxLesson = dxl;
+                }
             }
         }
     }
+
+    public void PopulateEventSetFromSandboxUser(List<DXEvent> dxEvents)
+    {
+        if (dxEvents == null) return;
+        if (dxEvents.Count > 0)
+        {
+            Label lessonDataLabel = root.Query<Label>("LESSONDATA");
+            lessonDataLabel.text = "Events";
+            var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
+            listView.visible = false;
+            var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
+            events.visible = true;
+
+            List<String> DropDownClassChoices = new List<string>();
+            foreach (DXEvent dXEvent in dxEvents)
+                DropDownClassChoices.Add(dXEvent.name);
+
+            var xy = root.Query<DropdownField>().ToList().Find(z => z.name == "EVENTSDD");
+            if (xy != null)
+                events.Remove(xy);
+            DropdownField dtf = new DropdownField(DropDownClassChoices, 0);
+            events.Add(dtf);
+            // dtf.BindProperty()
+            dtf.name = "EVENTSDD";
+            dtf.style.position = Position.Absolute;
+            dtf.style.top = 0;
+            dtf.style.width = 200;
+            dtf.style.left = 116;
+
+            dtf.RegisterCallback<ChangeEvent<string>>(EventSelectionDropDownListener);
+
+            var labels = root.Query<Label>().ToList();
+            var textFields = root.Query<TextField>().ToList();
+
+            var EventID = textFields.Find(x => x.name == "EVENTID");
+            var EventDescription = textFields.Find(x => x.name == "EVENTDESCRIPTION");
+
+            EventDescription.value = dxEvents[0].description;
+            EventID.value = dxEvents[0].eventId;
+
+            thisAppsTest.dxEventList = dxEvents;
+        }
+    }
+
+    private void EventSelectionDropDownListener(ChangeEvent<String> evt)
+    {
+        DXEvent dXEvent = DXCommunicationLayerEditor.thisAppEvents.Find(x => x.name == evt.newValue);
+
+        var labels = root.Query<Label>().ToList();
+        var textFields = root.Query<TextField>().ToList();
+
+        var EventDescription = textFields.Find(x => x.name == "EVENTDESCRIPTION");
+        var EventID = textFields.Find(x => x.name == "EVENTID");
+
+        EventDescription.value = dXEvent.description != null ? dXEvent.description : "";
+        EventID.value = dXEvent.eventId;
+    }
+
     public void PopulateAppList()
     {
         List<string> DropDownAppChoices = new List<string>();
@@ -580,7 +679,7 @@ public class MOTARSetupWindow : EditorWindow
                 //string handle = textFields.Find(x => x.name== "USERID" ).text;
                 //string password = textFields.Find(x => x.name == "PASSWORD").text;
                 //DXTrainingLogin.AuthenticateMotarTrainingUser(handle,password);
-                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperSandboxUserImpersonation(userId, clientID.value, appId,PopulateClassList),this);
+                EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperSandboxUserImpersonation(userId, clientID.value, appId,PopulateCourseList),this);
                 //EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(handle, password, MOTARAuthenticationCompletion), this);
 
                 break;
@@ -773,7 +872,12 @@ public class MOTARSetupWindow : EditorWindow
         // Provide the list view with an explict height for every row
         // so it can calculate how many items to actually display
         const int itemHeight = 16;
+        Label lessonDataLabel = root.Query<Label>("LESSONDATA");
+        lessonDataLabel.text = "Questions";
+        var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
+        events.visible = false;
         var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
+        listView.visible = true;
         listView.itemHeight = itemHeight;
         listView.bindItem = bindItem;
         listView.makeItem = makeItem;
@@ -789,6 +893,7 @@ public class MOTARSetupWindow : EditorWindow
         thisAppsTest.dxQuestionsList = dxQuestionsList;
         //listView.Refresh();
     }
+
 
     public static void PopulateQuestionsList()
     {
@@ -810,7 +915,12 @@ public class MOTARSetupWindow : EditorWindow
         // Provide the list view with an explict height for every row
         // so it can calculate how many items to actually display
         const int itemHeight = 16;
+        Label lessonDataLabel = root.Query<Label>("LESSONDATA");
+        lessonDataLabel.text = "Questions";
+        var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
+        events.visible = false;
         var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
+        listView.visible = true;
         listView.itemHeight = itemHeight;
         listView.bindItem = bindItem;
         listView.makeItem = makeItem;

@@ -19,12 +19,23 @@ using DXCommunications;
 
 public class MOTARAPIsWindow : EditorWindow
 {
-    public const string GitbookAPIToken = "VDNYT3Jjc2ZrZU9PcG0zWlg1MmhSRWZ6RnNuMjotTVdSQnhPa1VRZ3JiMGpJU3gyeC0tTVdSQnhPbEFPSE5wb2puSV94aw";
+    //public const string GitbookAPIToken = "VDNYT3Jjc2ZrZU9PcG0zWlg1MmhSRWZ6RnNuMjotTVdSQnhPa1VRZ3JiMGpJU3gyeC0tTVdSQnhPbEFPSE5wb2puSV94aw";
+    //public const string GitbookSpaceID = "-LfL7IpQLlHbntS_nANV"; //API doc
+    //public const string GitbookAPIBaseURL = "https://api.gitbook.com/v1/";
+    //public const string MOTARGitbookSpaceID = "-LfL7IpQLlHbntS_nANV";
+    //public const string MOTARGitbookAPIPageID = "-LkUR2avuiCm1dtZA5zz";
+    //public static string GitbookAPIPageURL = GitbookAPIBaseURL + "spaces/" + MOTARGitbookSpaceID + "/content/v/master/id/" + MOTARGitbookAPIPageID;
+    //public static string GitbookAPIPageURLBase = GitbookAPIBaseURL + "spaces/" + MOTARGitbookSpaceID + "/content/v/master/id/";
+
+    public const string GitbookOldAPIToken = "VDNYT3Jjc2ZrZU9PcG0zWlg1MmhSRWZ6RnNuMjotTVdSQnhPa1VRZ3JiMGpJU3gyeC0tTVdSQnhPbEFPSE5wb2puSV94aw";
+    public const string GitbookAPIToken = "-MWRBxOkUQgrb0jISx2x--MWRBxOlAOHNpojnI_xk";
     public const string GitbookSpaceID = "-LfL7IpQLlHbntS_nANV"; //API doc
-    public const string GitbookAPIBaseURL = "https://api-beta.gitbook.com/v1/";
+    public const string GitbookAPIBaseURL = "https://api.gitbook.com/v1/";
     public const string MOTARGitbookSpaceID = "-LfL7IpQLlHbntS_nANV";
     public const string MOTARGitbookAPIPageID = "-LkUR2avuiCm1dtZA5zz";
-    public static string GitbookAPIPageURL = GitbookAPIBaseURL + "spaces/" + MOTARGitbookSpaceID + "/content/v/master/id/" + MOTARGitbookAPIPageID;
+
+
+    public static string GitbookAPIPageURL = GitbookAPIBaseURL + "spaces/" + MOTARGitbookSpaceID + "/content/url/develop/api/authentication/oauth-api"; ///id/" + MOTARGitbookAPIPageID;
     public static string GitbookAPIPageURLBase = GitbookAPIBaseURL + "spaces/" + MOTARGitbookSpaceID + "/content/v/master/id/";
     private static List<string> ExcludedCategories = new List<string>();
 
@@ -648,10 +659,11 @@ public class MOTARAPIsWindow : EditorWindow
 
     public void GetTreeDataFromGitbook()
     {
-      
-        EditorCoroutineUtility.StartCoroutine(GitbookURLRequest(GitbookAPIPageURL,LoadTreeDataIntoTreeView),this);
 
-      
+        //EditorCoroutineUtility.StartCoroutine(GitbookURLRequest(GitbookAPIPageURL,LoadTreeDataIntoTreeView),this);
+        EditorCoroutineUtility.StartCoroutine(GitbookURLRequest(GitbookAPIPageURL, LoadTreeItemDataInfoPane), this);
+
+
 
     }
     public void GetTreeItemDataFromGitbook(string id)
@@ -674,8 +686,9 @@ public class MOTARAPIsWindow : EditorWindow
     private void LoadTreeItemDataInfoPane(string json)
     {
         JObject ourGitbookPageDetail = JObject.Parse(json);
+        var xtst = JsonConvert.DeserializeObject(json);
         var labels = root.Query<Label>().ToList();
-        var jNodeCollection = ourGitbookPageDetail["document"]["document"]["nodes"];
+        var jNodeCollection = ourGitbookPageDetail["document"]["nodes"];
 
         List<string> apiEntries = new List<string>();
         var listView = root.Query<ListView>().ToList().Find(x => x.name == "APIs");

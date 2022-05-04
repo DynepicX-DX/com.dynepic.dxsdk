@@ -40,12 +40,12 @@ public class MOTARSdk : EditorWindow
         //  gstyle.font.material.color = Color.grey;
 
         type = typeof(MOTARPrefabsWindow);
-        var window2 = GetWindow<MOTARAPIsWindow>(new Type[] { type });
-        //var window2 = GetWindow<MOTARAPIsWindow>();
-        window2.titleContent = new GUIContent("APIs", txFaded, "MOTAR APIs");
-        window2.minSize = new Vector2(MOTARSDKWindowWidth, 300);
+        //var window2 = GetWindow<MOTARAPIsWindow>(new Type[] { type });
+        ////var window2 = GetWindow<MOTARAPIsWindow>();
+        //window2.titleContent = new GUIContent("APIs", txFaded, "MOTAR APIs");
+        //window2.minSize = new Vector2(MOTARSDKWindowWidth, 300);
 
-        type = typeof(MOTARAPIsWindow);
+        //type = typeof(MOTARAPIsWindow);
         //var window3 = GetWindow<MOTARDiscoverWindow>();
         var window3 = GetWindow<MOTARDiscoverWindow>(new Type[] { type });
 
@@ -87,6 +87,20 @@ public class MOTARSdk : EditorWindow
        
 
 
+    }
+
+    public static void ShowOrginizationWindow() {
+        Texture tx = (Texture)Resources.Load<Texture>("motar_editor_label");
+        motarLabel = tx;
+
+        Texture txFaded = (Texture)Resources.Load<Texture>("motar_editor_label");
+
+        var windowOrgSelect = GetWindow<MOTAROrgWindow>();
+        windowOrgSelect.titleContent = new GUIContent("Org Selection", txFaded, "MOTAR Setup");
+
+        Type type = typeof(MOTARSetupWindow);
+
+        windowOrgSelect.Focus();
     }
 
     public static System.Type[] GetAllEditorWindowTypes()

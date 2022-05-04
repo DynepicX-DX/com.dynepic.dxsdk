@@ -54,6 +54,8 @@ namespace DXCommunications
         public string description;
         public string profilePic;
         public string coverPhoto;
+
+        public List<DXClass> classes;
     }
 
     [Serializable]
@@ -76,7 +78,7 @@ namespace DXCommunications
     {
         public List<DXLesson> docs;
     }
-    
+
     [Serializable]
     internal class UpdateProgressBody
     {
@@ -140,6 +142,20 @@ namespace DXCommunications
         }
     }
     
+    [Serializable]
+    public class DXEvent
+    {
+        public string name;
+        public string description;
+        public string eventId;
+    }
+
+    [Serializable]
+    public class DXEventSet
+    {
+        public List<DXEvent> events;
+    }
+
 
     [Serializable]
     public class DXProfile

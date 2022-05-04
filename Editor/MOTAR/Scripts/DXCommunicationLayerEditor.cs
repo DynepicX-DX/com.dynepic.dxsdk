@@ -47,12 +47,14 @@ namespace DXCommunications
         public static string DevSandboxAccessToken;
         public static string DevSandboxRefreshToken;
         public static DXAppLessonData thisApp;
+        public static List<DXCourse> thisAppCourses;
         public static GetAllClassesResponse thisAppClasses;
         public static GetAllLessonsResponse thisAppLessons;
+        public static List<DXEvent> thisAppEvents;
 
         //bCorrect, questions[questionIndex].question, questions[questionIndex].correctAnswerIndex, attemptedClassId, attemptedLessonId
 
-        public static IEnumerator MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(string handle, string password, string orgFilter,Action<bool> completion,
+        public static IEnumerator MOTARDeveloperAuthenticationAndSetupFromMOTARDeveloperID(string handle, string password,Action<bool> completion,
                 int? page = null,
                 int? limit = null)
         {
@@ -109,9 +111,10 @@ namespace DXCommunications
                         headers.TryGetValue("refreshtoken", out string refreshToken);
                         DevAccessToken = accessToken;
                         DevRefreshToken = refreshToken;
-                        yield return MOTARDeveloperEnumerateCompanies(orgFilter);
+                        yield return MOTARDeveloperEnumerateCompanies();
                         if (completion != null)
                             completion(true);
+                        
                         break;
 
                     default:
@@ -521,7 +524,7 @@ namespace DXCommunications
         public static IEnumerator MOTARDeveloperClassInfoFromLoggedOnSandboxUser()
         {
 
-            string url = DXUrl.endpoint("edu/v1/class/list");
+            string url = DXUrl.endpoint("edu/v1/class/list?limit=100");
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
 
@@ -556,6 +559,7 @@ namespace DXCommunications
 
                         //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
                         var result = JsonConvert.DeserializeObject<DXCommunications.GetAllClassesResponse>(json);
+                        MOTARDeveloperCourseInfoFromClass(result);
                         thisAppClasses = result;
                         //if (thisApp == null)
                         //    thisApp = ScriptableObject.CreateInstance<DXAppLessonData>(); thisApp.dxClass = result.docs.Find(x => x.course != null && x.name.ToLower().Contains("demo"));
@@ -569,11 +573,48 @@ namespace DXCommunications
                         break;
                 }
             }
-
-
-
         }
-        private static IEnumerator MOTARDeveloperEnumerateCompanyApps(DXDeveloperCompany dCompany)
+
+        public static void MOTARDeveloperCourseInfoFromClass(GetAllClassesResponse response)
+        {
+            List<DXCourse> courses = new List<DXCourse>();
+
+            foreach (DXClass c in response.docs)
+            {
+                DXCourse course = c.course;
+                if (course.classes == null) course.classes = new List<DXClass>();
+                DXCourse existingCourse = courses.Find(x => x.courseId == course.courseId);
+
+                if (existingCourse != null)
+                    existingCourse.classes.Add(c);
+                else
+                {
+                    course.classes.Add(c);
+                    courses.Add(course);
+                }
+            }
+
+            thisAppCourses = courses;
+
+            String s = "";
+            foreach (DXCourse course in thisAppCourses)
+            {
+                s += "Course Name: " + course.name + " | Classes: " + getClasses(course);
+            }
+            Debug.Log(s);
+        }
+
+        private static String getClasses(DXCourse course)
+        {
+            String s = "";
+            foreach (DXClass c in course.classes)
+            {
+                s += c.name + " , ";
+            }
+            return s;
+        }
+
+        public static IEnumerator MOTARDeveloperEnumerateCompanyApps(DXDeveloperCompany dCompany)
         {
 
             //string url = "https://api.motar.io/sdk/v1/app/list?companyId=" + dCompany.id;
@@ -618,9 +659,8 @@ namespace DXCommunications
 
 
         }
-        private static IEnumerator MOTARDeveloperEnumerateCompanySandboxUsers(DXDeveloperCompany dCompany)
+        public static IEnumerator MOTARDeveloperEnumerateCompanySandboxUsers(DXDeveloperCompany dCompany)
         {
-
             string url = DXUrl.endpoint("sdk/v1/user/list?companyId=" + dCompany.id, DXEnvironment.Production);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
@@ -696,9 +736,9 @@ namespace DXCommunications
 
             }
         }
-        public static IEnumerator MOTARDeveloperEnumerateCompanies(string orgFilter)
+        public static IEnumerator MOTARDeveloperEnumerateCompanies()
         {
-
+            string orgFilter = "";
             //string url = "https://api.motar.io/sdk/v1/company/list";
             string url = DXUrl.endpoint("sdk/v1/company/list",DXEnvironment.Production);
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
@@ -708,7 +748,6 @@ namespace DXCommunications
                 webRequest.SetRequestHeader("Authorization", "Bearer " + DevAccessToken);
                 // Request and wait for the desired page.
                 yield return webRequest.SendWebRequest();
-
 
                 switch (webRequest.result)
                 {
@@ -734,17 +773,20 @@ namespace DXCommunications
 
                         //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
                         companyList = JsonConvert.DeserializeObject<List<DXDeveloperCompany>>(json);
-                        if(companyList != null && companyList.Count > 0)
-                        {
-                            DXDeveloperCompany dxCompany = companyList[0];
-                            DXDeveloperCompany demoDxCompany = null; // companyList.Find(x => x.name == "Boeing");
-                            if(orgFilter != "" && orgFilter != null)
-                                demoDxCompany = companyList.Find(x => x.name == orgFilter);
-                            if (demoDxCompany != null)
-                                dxCompany = demoDxCompany;
-                            yield return MOTARDeveloperEnumerateCompanyApps(dxCompany);
-                            yield return MOTARDeveloperEnumerateCompanySandboxUsers(dxCompany);
-                        }
+                        
+                        MOTAROrgWindow.PopulateDXCompanies(companyList);
+
+                        //if(companyList != null && companyList.Count > 0)
+                        //{
+                        //    DXDeveloperCompany dxCompany = companyList[0];
+                        //    DXDeveloperCompany demoDxCompany = null; // companyList.Find(x => x.name == "Boeing");
+                        //    if(orgFilter != "" && orgFilter != null)
+                        //        demoDxCompany = companyList.Find(x => x.name == orgFilter);
+                        //    if (demoDxCompany != null)
+                        //        dxCompany = demoDxCompany;
+                        //    yield return MOTARDeveloperEnumerateCompanyApps(dxCompany);
+                        //    yield return MOTARDeveloperEnumerateCompanySandboxUsers(dxCompany);
+                        //}
                         
                         break;
 
@@ -913,6 +955,7 @@ namespace DXCommunications
                         //var result = JsonConvert.DeserializeObject<GetAllLessonsResponse>(json);
                         var result = JsonUtility.FromJson<GetAllLessonsResponse>(json);
                         thisAppLessons = result;
+
                         //thisApp.dxLesson = result.docs[0];
                         //yield return MOTARDeveloperQuestionsFromLesson();
                         if (completion != null)
@@ -925,10 +968,8 @@ namespace DXCommunications
                         break;
                 }
             }
-
-
-
         }
+
         public static IEnumerator MOTARDeveloperLessonInfoFromApp()
         {
             string url = DXUrl.endpoint("edu/v1/lesson/app");
@@ -1086,10 +1127,63 @@ namespace DXCommunications
                         break;
                 }
             }
-
-
-
         }
+
+        public static IEnumerator MOTARDeveloperEventSetFromLessonFromSandboxUser(DXLesson dXLesson, Action<List<DXEvent>> completion)
+        {
+            string url = DXUrl.endpoint("edu/v1/event-set") + "?eventSetId=" + dXLesson.lessonId;
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+            {
+
+
+                webRequest.SetRequestHeader("Authorization", "Bearer " + DevSandboxAccessToken);
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+
+
+                switch (webRequest.result)
+                {
+                    case UnityWebRequest.Result.ConnectionError:
+                    case UnityWebRequest.Result.DataProcessingError:
+                        Debug.LogError(": Error: " + webRequest.error);
+                        completion(null);
+                        break;
+                    case UnityWebRequest.Result.ProtocolError:
+                        Debug.LogError(": HTTP Error: " + webRequest.error);
+                        Debug.LogError(": HTTP Error: " + webRequest.downloadHandler.text);
+                        completion(null);
+                        break;
+                    case UnityWebRequest.Result.Success:
+                        Debug.Log("received login RESPONSE at " + System.DateTime.Now);
+                        Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
+                        string json = webRequest.downloadHandler.text;
+
+                        //JObject test = (JObject)JsonConvert.DeserializeObject(json);
+
+                        //foreach (JToken jt in test.Children())
+                        //{
+                        //    Debug.LogWarning("jt:Type" + jt.Type);
+                        //}
+                        //var testDetail = test["docs"];
+
+                        //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
+                        //var result = JsonConvert.DeserializeObject<GetAllLessonsResponse>(json);
+                        var result = JsonConvert.DeserializeObject<List<DXEvent>>(json);
+                        thisAppEvents = result;
+                        if (completion != null)
+                            completion(result);
+
+                        break;
+
+                    default:
+                        Exception error = null;
+                        error = JsonUtility.FromJson<DXError>(webRequest.downloadHandler.text);
+                        completion(null);
+                        break;
+                }
+            }
+        }
+
         private static int List<T>()
         {
             throw new NotImplementedException();
@@ -1106,7 +1200,11 @@ namespace DXCommunications
             }
             return string.Join("&", list);
         }
-    }
 
+        public static List<DXDeveloperCompany> GetDXDeveloperCompanies()
+        {
+            return companyList;
+        }
+    }
 
 }

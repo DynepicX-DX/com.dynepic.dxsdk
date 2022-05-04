@@ -23,25 +23,14 @@
         <ui:TextField name="APPCLIENTSECRET" password="true" mask-character="*" style="position: absolute; width: 200; top: 138px; left: 100px;" />
         <ui:Button name="SHOWCLIENTSECRET" display-tooltip-when-elided="true" style="position: absolute; top: 142px; left: 308px; width: 16px; height: 11px; background-image: url(&apos;/Packages/com.dynepic.dxsdk/Runtime/MOTAR/MOTAR_Images/Eye.png&apos;); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0);" />
     </ui:Box>
-    <ui:Box name="CLASSINFOBOX" style="position: absolute; top: 35px; left: 695px; width: 330; height: 170; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
-        <ui:Label text="Name:" display-tooltip-when-elided="true" name="NameLabel" style="position: absolute; top: 37px; left: 17px;" />
-        <ui:Label text="Group ID:" display-tooltip-when-elided="true" name="GroupIDLabel" style="position: absolute; top: 67px; left: 17px;" />
-        <ui:Label text="Join Code:" display-tooltip-when-elided="true" name="JoinCodeLabel" style="position: absolute; top: 90px; left: 17px;" />
-        <ui:Label text="This class contains no courses" display-tooltip-when-elided="true" name="WarningLabel" style="left: 10px; top: 140px; height: 16px; width: 311px; color: rgb(243, 63, 63);" />
-        <ui:Label text="Class Info" display-tooltip-when-elided="true" name="ClassInfoLabel" style="position: absolute; top: 5px; left: 10px;" />
-    </ui:Box>
-    <ui:TextField name="GROUPID" style="position: absolute; top: 100px; left: 811px; width: 200;" />
-    <ui:TextField name="JOINCODE" style="position: absolute; top: 125px; left: 811px; width: 200;" />
-    <ui:Box name="CourseInfoBox" style="position: absolute; top: 220px; left: 5px; width: 330; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
-        <ui:Label text="This course contains no lessons&#10;" display-tooltip-when-elided="false" name="CourseLessonsWarningLabel" style="left: 10px; top: 130px; height: 16px; width: 311px; color: rgb(243, 63, 63); opacity: 0;" />
-    </ui:Box>
-    <ui:Label text="Course Info" display-tooltip-when-elided="true" name="CourseInfoLabel" style="position: absolute; top: 230px; left: 10px;" />
-    <ui:Label text="Name:" display-tooltip-when-elided="true" name="CourseNameLabel" style="position: absolute; top: 260px; left: 16px;" />
-    <ui:Label text="Description:" display-tooltip-when-elided="true" style="position: absolute; top: 285px; left: 16px;" />
-    <ui:Label text="Course ID:" display-tooltip-when-elided="true" style="position: absolute; top: 310px; left: 16px;" />
-    <ui:Label name="COURSENAME" style="position: absolute; top: 260px; left: 116px;" />
-    <ui:Label name="COURSEDESCRIPTION" style="position: absolute; top: 285px; left: 116px;" />
-    <ui:TextField name="COURSEID" style="position: absolute; top: 310px; left: 116px; width: 200;" />
+    <ui:TextField name="GROUPID" style="position: absolute; top: 285px; left: 121px; width: 200;" />
+    <ui:TextField name="JOINCODE" style="position: absolute; top: 310px; left: 121px; width: 200;" />
+    <ui:Label text="Course Info" display-tooltip-when-elided="true" name="CourseInfoLabel" style="position: absolute; top: 45px; left: 700px;" />
+    <ui:Label text="Name:" display-tooltip-when-elided="true" name="CourseNameLabel" style="position: absolute; top: 75px; left: 706px; height: 15px;" />
+    <ui:Label text="Description:" display-tooltip-when-elided="true" style="position: absolute; top: 100px; left: 706px;" />
+    <ui:Label text="Course ID:" display-tooltip-when-elided="true" style="position: absolute; top: 125px; left: 706px;" />
+    <ui:Label name="COURSEDESCRIPTION" style="position: absolute; top: 100px; left: 806px;" />
+    <ui:TextField name="COURSEID" style="position: absolute; top: 125px; left: 806px; width: 200;" />
     <ui:Box name="LESSONINFOBOX" style="position: absolute; top: 220px; left: 350px; width: 330; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
         <ui:Label text="Lesson Info" display-tooltip-when-elided="true" name="LessonInfoLabel" style="position: relative; top: 10px; left: 5px;" />
         <ui:Label text="Name:" display-tooltip-when-elided="true" name="LessonNameLabel" style="position: relative; top: 30px; left: 10px;" />
@@ -51,13 +40,26 @@
         <ui:TextField name="LESSONID" style="position: relative; top: 30px; left: 100px; width: 200;" />
     </ui:Box>
     <ui:Box style="position: absolute; top: 220px; left: 695px; width: 330; height: 30; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0);">
-        <ui:Label text="Questions" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 5px;" />
+        <ui:Label text="Lesson Data" display-tooltip-when-elided="true" name="LESSONDATA" style="position: relative; top: 5px; left: 5px;" />
     </ui:Box>
-    <ui:Box name="BoxDescription" style="position: absolute; top: 250px; left: 695px; width: 329; height: 130; border-left-color: rgb(5, 5, 5); border-right-color: rgb(7, 7, 7); border-bottom-color: rgb(0, 0, 0);">
-        <ui:ListView name="QUESTIONS" focusable="true" />
+    <ui:Box name="BoxDescription" style="position: absolute; top: 250px; left: 695px; width: 329; height: 130; border-left-color: rgb(5, 5, 5); border-right-color: rgb(7, 7, 7); border-bottom-color: rgb(0, 0, 0); justify-content: flex-start;">
+        <ui:ListView name="QUESTIONS" focusable="true" style="visibility: hidden;" />
+        <ui:VisualElement name="EVENTS" style="visibility: hidden; position: absolute;">
+            <ui:Label text="Event: " display-tooltip-when-elided="true" name="Label" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; left: 5px; top: 5px; position: absolute; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            <ui:TextField picking-mode="Ignore" label="Description:" value="description" name="EVENTDESCRIPTION" style="align-items: stretch; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; position: absolute; left: 5px; top: 40px; width: 300px;" />
+            <ui:TextField picking-mode="Ignore" label="EventID:" value="id" text="id" name="EVENTID" style="align-items: stretch; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; position: absolute; left: 5px; top: 60px; width: 300px;" />
+        </ui:VisualElement>
     </ui:Box>
     <ui:Button name="GENERATE" text=" Save Settings " display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 392px; left: 302px;" />
     <ui:Button name="RESET" text="Reset Assesment Data" display-tooltip-when-elided="true" style="height: 25px; position: absolute; top: 392px; left: 619px;" />
-    <ui:Label text="Filter:" display-tooltip-when-elided="true" name="CourseInfoFilterLabel" style="position: absolute; top: 232px; left: 114px;" />
-    <ui:TextField name="COURSENAMEFILTER" style="position: absolute; top: 230px; left: 158px; width: 151px;" />
+    <ui:Box name="CourseInfoBox" style="position: absolute; top: 35px; left: 695px; width: 330; height: 170px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label text="This course contains no lessons&#10;" display-tooltip-when-elided="false" name="CourseLessonsWarningLabel" style="left: 10px; top: 130px; height: 16px; width: 311px; color: rgb(243, 63, 63); opacity: 0;" />
+    </ui:Box>
+    <ui:Box name="CLASSINFOBOX" style="position: absolute; top: 220px; left: 5px; width: 330; height: 160px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label text="Name:" display-tooltip-when-elided="true" name="NameLabel" style="position: absolute; top: 37px; left: 17px;" />
+        <ui:Label text="Group ID:" display-tooltip-when-elided="true" name="GroupIDLabel" style="position: absolute; top: 67px; left: 17px;" />
+        <ui:Label text="Join Code:" display-tooltip-when-elided="true" name="JoinCodeLabel" style="position: absolute; top: 90px; left: 17px;" />
+        <ui:Label text="This class contains no courses" display-tooltip-when-elided="true" name="WarningLabel" style="left: 10px; top: 140px; height: 16px; width: 311px; color: rgb(243, 63, 63);" />
+        <ui:Label text="Class Info" display-tooltip-when-elided="true" name="ClassInfoLabel" style="position: absolute; top: 5px; left: 10px;" />
+    </ui:Box>
 </ui:UXML>

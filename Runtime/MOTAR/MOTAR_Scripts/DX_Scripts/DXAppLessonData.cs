@@ -24,6 +24,7 @@ namespace DXCommunications
         public DXLesson dxLesson;
         [SerializeField]
         public List<DXAssessmentQuestion> dxQuestionsList;
-
+        [SerializeField]
+        public List<DXEvent> dxEventList;
     }
 }
