@@ -850,6 +850,7 @@ namespace DXCommunications
                         //var result = JsonUtility.FromJson<GetAllClassesResponse>(json);
                         var result = JsonConvert.DeserializeObject<DXProfile>(json);
                         loggedOnUserProfile = result;
+                        yield return DXProfileFriendsRequest();
                         completion(loggedOnUserProfile);
 
                         break;
@@ -863,6 +864,49 @@ namespace DXCommunications
 
 
 
+        }
+
+        public static IEnumerator DXProfileFriendsRequest() {
+            //     private static string profileBase = Host + "/user/v1";
+            //internal static string userProfile = profileBase + "/my/profile";
+            //internal static string friendProfiles = profileBase + "/my/friends";
+            //internal static string myProfilePicture = profileBase + "/my/profile/picture";
+            //internal static string myCoverPhoto = profileBase + "/my/profile/cover";
+
+            string url = DXUrl.endpoint("user/v1/my/friends");
+            //Debug.LogError("getting profile from " + url);
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url)) {
+
+                //Debug.LogError("Set auth token to " + AccessToken);
+                webRequest.SetRequestHeader("Authorization", "Bearer " + AccessToken);
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+
+
+                switch (webRequest.result) {
+                    case UnityWebRequest.Result.ConnectionError:
+                    case UnityWebRequest.Result.DataProcessingError:
+                        Debug.LogError(": Error: " + webRequest.error);
+                        break;
+                    case UnityWebRequest.Result.ProtocolError:
+                        Debug.LogError(": HTTP Error: " + webRequest.error);
+                        Debug.LogError(": HTTP Error: " + webRequest.downloadHandler.text);
+                        break;
+                    case UnityWebRequest.Result.Success:
+                        Debug.Log("received login RESPONSE at " + System.DateTime.Now);
+                        Debug.Log(":\nReceived: " + webRequest.downloadHandler.text);
+                        string json = webRequest.downloadHandler.text;
+
+                        loggedOnUserProfile.friends = JsonConvert.DeserializeObject<List<DXProfile>>(json);
+
+                        break;
+
+                    default:
+                        Exception error = null;
+                        error = JsonUtility.FromJson<DXError>(webRequest.downloadHandler.text);
+                        break;
+                }
+            }
         }
 
     }

@@ -177,6 +177,7 @@ namespace DXCommunications
         public bool trainer;
         public bool trainee;
 
+        public List<DXProfile> friends;
         public enum UserType
         {
             [EnumMember(Value = "adult")]

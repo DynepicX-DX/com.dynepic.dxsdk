@@ -134,7 +134,7 @@ public class MOTARSetupWindow : EditorWindow
 
                 dtf.style.top = 33;
                 dtf.style.width = 170;
-                dtf.style.left = 95;
+                dtf.style.left = 90;
 
                 dtf.RegisterCallback<ChangeEvent<string>>(SandboxUserSelectionChangeListener);
                 
@@ -229,8 +229,6 @@ public class MOTARSetupWindow : EditorWindow
                 GroupID.value = dxClass.groupId;
                 JoinCode.value = dxClass.joinCode;
 
-                var warningLabel = labels.Find(x => x.name == "WarningLabel");
-
                 EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
             }
         }
@@ -248,9 +246,6 @@ public class MOTARSetupWindow : EditorWindow
 
         GroupID.value = dxClass.groupId;
         JoinCode.value = dxClass.joinCode;
-
-        var warningLabel = labels.Find(x => x.name == "WarningLabel");
-        warningLabel.visible = dxClass.course == null;
 
         EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
         
@@ -284,7 +279,7 @@ public class MOTARSetupWindow : EditorWindow
                     dtf.style.position = Position.Absolute;
                     dtf.style.top = 36;
                     dtf.style.width = 200;
-                    dtf.style.left = 116;
+                    dtf.style.left = 108;
 
                     dtf.RegisterCallback<ChangeEvent<string>>(CourseSelectionDropdownListener);
 
@@ -346,6 +341,8 @@ public class MOTARSetupWindow : EditorWindow
         var LessonDescription = textFields.Find(x => x.name == "LESSONDESCRIPTION");
         var LessonID = textFields.Find(x => x.name == "LESSONID");
 
+        Label extraLessonData = root.Query<Label>("NoExtraLessonData");
+        extraLessonData.visible = true;
         var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
         listView.visible = false;
         var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
@@ -399,9 +396,9 @@ public class MOTARSetupWindow : EditorWindow
                 // dtf.BindProperty()
                 dtf.name = "LESSONNAMES";
                 dtf.style.position = Position.Absolute;
-                dtf.style.top = 38;
+                dtf.style.top = 42;
                 dtf.style.width = 200;
-                dtf.style.left = 105;
+                dtf.style.left = 100;
 
                 dtf.RegisterCallback<ChangeEvent<string>>(LessonSelectionDropdownListener);
 
@@ -411,6 +408,8 @@ public class MOTARSetupWindow : EditorWindow
                 var LessonDescription = textFields.Find(x => x.name == "LESSONDESCRIPTION");
                 var LessonID = textFields.Find(x => x.name == "LESSONID");
 
+                Label extraLessonData = root.Query<Label>("NoExtraLessonData");
+                extraLessonData.visible = true;
                 var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
                 listView.visible = false;
                 var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
@@ -445,6 +444,8 @@ public class MOTARSetupWindow : EditorWindow
         {
             Label lessonDataLabel = root.Query<Label>("LESSONDATA");
             lessonDataLabel.text = "Events";
+            Label extraLessonData = root.Query<Label>("NoExtraLessonData");
+            extraLessonData.visible = false;
             var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");
             listView.visible = false;
             var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
@@ -874,6 +875,8 @@ public class MOTARSetupWindow : EditorWindow
         const int itemHeight = 16;
         Label lessonDataLabel = root.Query<Label>("LESSONDATA");
         lessonDataLabel.text = "Questions";
+        Label extraLessonData = root.Query<Label>("NoExtraLessonData");
+        extraLessonData.visible = false;
         var events = root.Query<VisualElement>().ToList().Find(x => x.name == "EVENTS");
         events.visible = false;
         var listView = root.Query<ListView>().ToList().Find(x => x.name == "QUESTIONS");

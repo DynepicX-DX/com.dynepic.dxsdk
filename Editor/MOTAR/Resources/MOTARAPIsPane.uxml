@@ -2,6 +2,7 @@
     <ui:IMGUIContainer />
     <ui:Box style="position: absolute; top: 10px; left: 250px; width: 400; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
         <ui:Label text="HTTP METHOD \t ENDPOINT" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 5px;" />
+        <ui:Image name="SPINNINGWHEEL" display-tooltip-when-elided="true" tabindex="0" style="position: absolute; top: 80px; left: 200px; max-width: 10px; max-height: 10px;" />
     </ui:Box>
     <ui:Box name="APIENDPOINTS" style="position: absolute; top: 40px; left: 250px; width: 400; height: 130;">
         <ui:ListView name="APIs" focusable="true" style="font: courier;" />
@@ -11,6 +12,7 @@
         <ui:Label text="Summary:" display-tooltip-when-elided="true" style="position: relative; top: 10px; left: 5px;" />
         <ui:Label name="SUMMARY" display-tooltip-when-elided="true" style="position: relative; top: -5px; left: 100px;" />
         <ui:Label text="Description:" display-tooltip-when-elided="true" style="position: relative; top: 25px; left: 5px;" />
+        <ui:Button text="See API in GitBook" display-tooltip-when-elided="true" name="OPENAPIDOC" style="width: 120px; align-items: center; position: absolute; left: auto; bottom: auto; right: 10px; visibility: hidden; top: 3px;" />
         <ui:Label name="DESCRIPTION" display-tooltip-when-elided="true" style="white-space: normal; width: 275px; left: 100px; bottom: 0; position: absolute; top: 70px; height: 100px; flex-wrap: wrap; align-items: flex-start;" />
         <ui:Button text="More details on GitBook" display-tooltip-when-elided="true" name="LAUNCHWEB" style="top: 200px; width: 160px; left: 30%;" />
     </ui:Box>
@@ -18,5 +20,16 @@
         <ui:Label text="Code Snippet:  requires the DXCommunications namespace&#x9;" display-tooltip-when-elided="true" style="top: 5px; left: 5px;" />
         <ui:Button text="&#10;" display-tooltip-when-elided="true" name="CLIPBOARD" focusable="true" style="left: 105%; top: 0; width: 32px; background-image: url(&apos;/Packages/com.dynepic.dxsdk/Runtime/MOTAR/MOTAR_Images/clip.png&apos;); background-color: rgb(250, 249, 249); height: 43px;" />
         <ui:TextField picking-mode="Ignore" name="SampleCode" />
+    </ui:Box>
+    <ui:VisualElement name="APICATEGORIES" style="position: absolute; top: 45px; left: 20px; width: 214px; height: 49px; align-items: flex-start; justify-content: flex-start;">
+        <ui:Label text=" API Categories:" display-tooltip-when-elided="true" />
+        <ui:Label text="Loading..." display-tooltip-when-elided="true" name="LOADINGLABEL" style="top: 45px; position: absolute; left: 5px; visibility: hidden;" />
+    </ui:VisualElement>
+    <ui:Box name="ParameterBox" style="position: absolute; top: 10px; left: 669px; width: 400; height: 160; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label text="Parameters:" display-tooltip-when-elided="true" style="position: relative; top: 5px; left: 5px;" />
+        <ui:Label text="Name:" display-tooltip-when-elided="true" enable-rich-text="true" name="ParameterName" style="position: relative; top: 20px; left: 5px;" />
+        <ui:Label text="Type:" display-tooltip-when-elided="true" enable-rich-text="true" name="ParameterType" style="position: relative; top: 30px; left: 5px;" />
+        <ui:Label text="Required:" display-tooltip-when-elided="true" enable-rich-text="true" name="ParameterRequired" style="position: relative; top: 30px; left: 5px;" />
+        <ui:Label text="Description:" display-tooltip-when-elided="true" enable-rich-text="true" name="ParameterDescription" style="position: relative; top: 30px; left: 5px; flex-wrap: wrap; width: 384px; flex-basis: 60px; flex-direction: column; align-items: auto; justify-content: flex-start; overflow: visible; height: 70px; flex-grow: 0; flex-shrink: 0; white-space: normal;" />
     </ui:Box>
 </ui:UXML>
