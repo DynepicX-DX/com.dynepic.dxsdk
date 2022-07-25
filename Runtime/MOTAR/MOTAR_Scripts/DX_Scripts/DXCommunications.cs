@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 namespace DXCommunications
 {
-    public enum DXEnvironment { Sandbox, Production, Development, FromConfiguration }
+    public enum DXEnvironment { Sandbox, Production, Development, FromConfiguration, PreProd, SimLearn}
     public enum APIErrorCode
     {
         //    400
@@ -107,7 +107,11 @@ namespace DXCommunications
                     return "https://sandbox.motar.io";
                 case DXEnvironment.Development:
                     return "https://api.motar-dev.com";
+                case DXEnvironment.PreProd:
+                    return "https://api.motar-preprod.com";
 
+                case DXEnvironment.SimLearn:
+                    return "https://api.va-simlearn.com";
                 default:
                     return "https://sandbox.motar.io";
 

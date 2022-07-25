@@ -229,6 +229,8 @@ public class MOTARSetupWindow : EditorWindow
                 GroupID.value = dxClass.groupId;
                 JoinCode.value = dxClass.joinCode;
 
+                thisAppsTest.dxClass = dxClass;
+
                 EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
             }
         }
@@ -246,6 +248,8 @@ public class MOTARSetupWindow : EditorWindow
 
         GroupID.value = dxClass.groupId;
         JoinCode.value = dxClass.joinCode;
+
+        thisAppsTest.dxClass = dxClass;
 
         EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperLessonInfoFromCourseFromSandboxUser(dxClass, PopulateLessonList), this);
         
@@ -695,6 +699,9 @@ public class MOTARSetupWindow : EditorWindow
                 break;
 
             case "GENERATE":
+                Debug.Log("Here");
+                Debug.Log(thisAppsTest.dxClass == null);
+                //Debug.Log(thisAppsTest.dxClass.course.name);
                 //DXAppLessonData appData = DXCommunicationLayerEditor.thisApp;
                 dxConfiguration.clientID = clientID.value;
                 dxConfiguration.clientSecret = clientSecret.value;
@@ -735,6 +742,7 @@ public class MOTARSetupWindow : EditorWindow
                 {
                     Debug.LogError("Can't create asset..."+e.Message);
                 }
+                
                 AssetDatabase.CreateAsset(thisAppsTest, "Assets/MOTAR/Resources/DXAppData.asset");
 
                 EditorCoroutineUtility.StartCoroutine(DXCommunicationLayerEditor.MOTARDeveloperClearImpersonatedStudentClassData(userId),this);
